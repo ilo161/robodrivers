@@ -1,0 +1,19 @@
+{
+  "name": "robo_drivers",
+  "version": "1.0.0",
+  "description": "In this century, your car works for you. Send your fully autonomous car out to generate passive income and help the community",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "server": "nodemon app.js"
+  },
+  "author": "Sergio Medina",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "validator": "^13.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
