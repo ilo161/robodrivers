@@ -6,10 +6,10 @@ import '../stylesheets/App.css';
 
 // uri:`http://localhost:4000/graphql`,
 //dogs
+// uri: 'https://71z1g.sse.codesandbox.io/',
 //xchange
-// uri: 'https://48p1r2roz4.sse.codesandbox.io',
 const client = new ApolloClient({
-  uri: 'https://71z1g.sse.codesandbox.io/',
+  uri: 'https://48p1r2roz4.sse.codesandbox.io',
   cache: new InMemoryCache()
 });
 
@@ -39,9 +39,9 @@ function App() {
   return (
     <div className="master">
       <ApolloProvider client={client}>
-        <p>Homepage</p>
+        <p>Homepage2</p>
         {/* <ExchangeRates/> */}
-        <Dogs/>
+        {/* <Dogs/> */}
       </ApolloProvider>
     </div>
   );

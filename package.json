@@ -2,7 +2,7 @@
   "name": "robo_drivers",
   "version": "1.0.0",
   "description": "In this century, your car works for you. Send your fully autonomous car out to generate passive income and help the community",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "start": "node app.js",
     "server": "nodemon app.js"
@@ -16,6 +16,7 @@
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
     "graphql": "^15.5.0",
+    "mongoose": "^5.12.9",
     "validator": "^13.6.0"
   },
   "devDependencies": {
