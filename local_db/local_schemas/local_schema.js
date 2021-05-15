@@ -9,7 +9,7 @@ const {
     GraphQLSchema
 } = require('graphql');
 
-const resolvers = require("../resolvers/resolvers")
+const resolvers = require("../local_resolvers/local_resolvers")
 
 //  { id: string, make: string, model: string, year: string, VIN: string }
 const CarType = new GraphQLObjectType({

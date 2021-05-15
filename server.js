@@ -39,18 +39,70 @@
 // app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: myGraphQLSchema }));
 // app.listen(PORT)
 // console.log(`GraphQL server listening on port ${PORT}`);
-const mongoose = require('mongoose');
-const express = require("express")
-const app = express();
-const db = require("./config/keys").mongoURI;
+// const express = require("express")
+// const app = express();
+// const mongoose = require('mongoose');
+// const db = require("./config/keys").mongoURI;
+// const User = require("./server/models/User")
+
+
+
+
+
+
+
+/// new tutorial apollo-server
+const { ApolloServer } = require("apollo-server");
+//v1
+// this export fails because duplicate key Query or Mutation
+// const typeDefs = require("./server/types/index");
+
+//v2
+const typeDefs = require("./server/types/index2");
+
+const resolvers = require("./server/resolvers/index");
+// models becomes the "global context" for ApolloServer
+const models = require("./server/models/index");
+const connectDb = require("./server/connectDb")
+
 
 //connect to mongoDB
-mongoose
-    .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log("Connected to MongoDB Successfully"))
-    .catch(err => console.log(err))
+// mongoose
+//     .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+//     .then(() => console.log("Connected to MongoDB Successfully"))
+//     .catch(err => console.log(err))
 
-const PORT = process.env.PORT || 5000;
-app.get("/", (req, res) => res.send("Hello World"));
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+connectDb();
+
+const PORT = process.env.PORT || 5001;
+
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: {models}
+})
+
+server.listen({ port: PORT }).then(({ url }) => {
+    console.log(`Apollo Server Ready at ${url}`)
+});
+
+// app.get("/", (req, res) => res.send("Hello World"));
+// app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+/*
+const goku = new User({
+    firstName: "Super",
+    lastName: "Saiyan",
+    money: 100,
+    cars:[]
+})
+console.log(goku)
+
+goku.save()
+    .then(function(){
+    User.findOne({firstName:"Super"}).then(function(record){
+        console.log(record.money)
+        })
+    })
+    .catch(err => console.log(err))
+    */
 

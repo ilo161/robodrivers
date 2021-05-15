@@ -15,6 +15,10 @@ const CarSchema = new Schema({
         type: String,
         required: true
     },
+    color: {
+        type: String,
+        required: true
+    },
     year: {
         type: String,
         required: true
@@ -25,28 +29,36 @@ const CarSchema = new Schema({
     },
     isWorking: {
         type: Boolean,
-        required: true
+        required: true,
+        default: true
     },
     isSummoned: {
         type: Boolean,
-        required: false
+        required: false,
+        default: false
     },
     hadAccident: {
         type: Boolean,
-        required: false
+        required: false,
+        default: false
     },
     maintenanceLog: {
         type: Array
     },
-    incomeGenerated: {
+    incomePerHr: {
         type: Number,
-        required: false
+        required: false,
+        default: 100
     },
     aILevel: {
         type: Number,
-        required: true
+        required: true,
+        default: 1
     }
 
 });
 
-module.exports = mongoose.model("car", CarSchema);
+// module.exports = mongoose.model("car", CarSchema);
+
+const Car = mongoose.model("car", CarSchema);
+module.exports = { Car }
