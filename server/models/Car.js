@@ -1,45 +1,45 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const { UserSchema } = require("./User");
 
 
 const CarSchema = new Schema({
     mileage: {
         type: Number,
-        required: true
+        // required: true,
+        default: 0
     },
     make: {
         type: String,
-        required: true
+        // required: true
     },
     model: {
         type: String,
-        required: true
+        // required: true
     },
     color: {
         type: String,
-        required: true
+        // required: true
     },
     year: {
         type: String,
-        required: true
+        // required: true
     },
     VIN: {
         type: String,
-        required: true
+        // required: true
     },
     isWorking: {
         type: Boolean,
-        required: true,
+        // required: true,
         default: true
     },
     isSummoned: {
         type: Boolean,
-        required: false,
         default: false
     },
     hadAccident: {
         type: Boolean,
-        required: false,
         default: false
     },
     maintenanceLog: {
@@ -47,18 +47,20 @@ const CarSchema = new Schema({
     },
     incomePerHr: {
         type: Number,
-        required: false,
         default: 100
     },
     aILevel: {
         type: Number,
-        required: true,
         default: 1
+    },
+    owner: 
+    {
+      type: Schema.Types.ObjectId,
+      ref: "user"
     }
-
 });
 
 // module.exports = mongoose.model("car", CarSchema);
 
 const Car = mongoose.model("car", CarSchema);
-module.exports = { Car }
+module.exports = { Car, CarSchema }

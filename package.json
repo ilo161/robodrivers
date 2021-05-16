@@ -4,8 +4,8 @@
   "description": "In this century, your car works for you. Send your fully autonomous car out to generate passive income and help the community",
   "main": "server.js",
   "scripts": {
-    "start": "node app.js",
-    "server": "nodemon app.js"
+    "start": "node server.js",
+    "server": "nodemon server.js"
   },
   "author": "Sergio Medina",
   "license": "ISC",

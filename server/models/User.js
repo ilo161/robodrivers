@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-// const CarSchema = require("./Car");
+const { CarSchema } = require("./Car");
 // const CarSchema = require('mongoose').model('car').schema
 /*
 const CarSchema = new Schema({
@@ -65,11 +65,32 @@ const UserSchema = new Schema({
         type: Number,
         required: true,
     },
-    cars: [String]
+    // cars: [CarSchema]
+    cars: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "car"
+    }
+  ]
 });
+
+// UserSchema.statics.addnewCar = (userId, carId) => {
+//   const User = mongoose.model("user");
+//   const Car = mongoose.model("car");
+
+//   return User.findById(userId).then(foundDog => {
+//     return Toy.findById(toyId).then(foundToy => {
+//       foundDog.toys.push(foundToy);
+//       foundToy.dogs.push(foundDog);
+//       return Promise.all([foundDog.save(), foundToy.save()]).then(
+//         ([savedDog, savedToy]) => savedDog
+//       );
+//     });
+//   });
+// };
 
 
 // module.exports = mongoose.model("user", UserSchema);
 
 const User = mongoose.model("user", UserSchema);
-module.exports = { User }
+module.exports = { User,  UserSchema }

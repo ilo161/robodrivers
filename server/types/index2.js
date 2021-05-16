@@ -15,6 +15,7 @@ module.exports = gql`
             maintenanceLog: [String]
             incomePerHr: Int!
             aILevel: Int!
+            owner: [User]
 
         }
 
@@ -23,11 +24,14 @@ module.exports = gql`
         firstName: String!
         lastName: String!
         money: Int!
+        cars:[Car]
     }
 
     type Query {
-        users: [User]
+        users: [User],
+        user(id: ID): User
         cars: [Car]
+        car(id: ID) : Car
     }
 
     input CreateUserInput {

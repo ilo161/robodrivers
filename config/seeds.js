@@ -131,7 +131,7 @@ const seedDb = () => {
     })
     */
 
-    // mongoose.connection.collections.users.drop(function() {
+    mongoose.connection.collections.users.drop(function() {
      const carsOwnedArray = [
             "609f5f6e782666b11eefd377",
             "609f5f6e782666b11eefd378",
@@ -147,7 +147,7 @@ const seedDb = () => {
             "609f5f6e782666b11eefd382"
         ]
         
-        //make users
+        //make users and attach IDs s Strings
         
         usersArr.forEach((userKeys, idx) => {
             const startCarCountAt = [0,6];
@@ -162,15 +162,12 @@ const seedDb = () => {
                 console.log("add car")
             }
 
-                // for (let i = startCarCountAt[countIdx]; i < (i + 6); i++){
-                //     newUser.cars.push(carsOwnedArray[i])
-                // }
-                // countIdx++;
-                newUser.save()
-                .then(console.log(`user: ${userKeys.firstName} ${newUser.cars} created`))
+
+            newUser.save()
+            .then(console.log(`user: ${userKeys.firstName} ${newUser.cars} created`))
             
         })
-    // })
+    })
 }
 
 
