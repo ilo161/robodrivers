@@ -15,7 +15,7 @@ module.exports = gql`
             maintenanceLog: [String]
             incomePerHr: Int!
             aILevel: Int!
-            owner: [User]
+            owner: User
 
         }
 
@@ -28,10 +28,11 @@ module.exports = gql`
     }
 
     type Query {
-        users: [User],
+        users: [User]
         user(id: ID): User
-        cars: [Car]
+        allCars(isWorking: Boolean, aILevel: Int): [Car]
         car(id: ID) : Car
+
     }
 
     input CreateUserInput {
@@ -41,9 +42,9 @@ module.exports = gql`
     }
 
     input UpdateUserInput {
-        firstName: String!
-        lastName: String!
-        money: Int!
+        firstName: String
+        lastName: String
+        money: Int
     }
 
     type DeleteUserPayload {
@@ -66,18 +67,18 @@ module.exports = gql`
     }
 
     input UpdateCarInput {
-        mileage: Int!
-        make: String!
-        model: String!
-        color: String!
-        year: String!
-        VIN: String!
-        isWorking: Boolean!
-        isSummoned: Boolean!
-        hadAccident: Boolean!
+        mileage: Int
+        make: String
+        model: String
+        color: String
+        year: String
+        VIN: String
+        isWorking: Boolean
+        isSummoned: Boolean
+        hadAccident: Boolean
         maintenanceLog: [String]
-        incomePerHr: Int!
-        aILevel: Int!
+        incomePerHr: Int
+        aILevel: Int
     }
 
     type DeleteCarPayload {

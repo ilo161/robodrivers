@@ -1,8 +1,8 @@
 // variable names are synonymous with query name
-const cars = require("./cars")
+const allCars = require("./allCars")
 const car = require("./car")
 
 module.exports = {
-    cars,
+    allCars,
     car
 }

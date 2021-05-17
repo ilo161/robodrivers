@@ -1,7 +1,10 @@
 const userMutations = require("./mutations/user/index") 
 const carMutations = require("./mutations/car/index") 
-const userQueries = require("./queries/user/index")
-const carQueries = require("./queries/car/index")
+const basicUserQueries = require("./queries/user/index")
+const basicCarQueries = require("./queries/car/index")
+
+const userQueries = require("./queries/_User/index")
+const carQueries = require("./queries/_Car/index")
 
 
 //combine all queries and mutations from cars and users into one
@@ -12,9 +15,17 @@ module.exports = {
         ...carMutations
     },
     Query: {
-        ...userQueries,
-        ...carQueries
+        ...basicUserQueries,
+        ...basicCarQueries
+    },
+    Car: {
+        // ...carQueries
+    },
+    User: {
+        ...userQueries
+
     }
+
 }
 
 
