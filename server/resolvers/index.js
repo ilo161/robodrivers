@@ -19,7 +19,7 @@ module.exports = {
         ...basicCarQueries
     },
     Car: {
-        // ...carQueries
+        ...carQueries
     },
     User: {
         ...userQueries

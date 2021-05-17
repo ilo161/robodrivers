@@ -65,13 +65,6 @@ const resolvers = require("./server/resolvers/index");
 const models = require("./server/models/index");
 const connectDb = require("./server/connectDb")
 
-
-//connect to mongoDB
-// mongoose
-//     .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
-//     .then(() => console.log("Connected to MongoDB Successfully"))
-//     .catch(err => console.log(err))
-
 connectDb();
 
 const PORT = process.env.PORT || 5001;
@@ -88,21 +81,5 @@ server.listen({ port: PORT }).then(({ url }) => {
 
 // app.get("/", (req, res) => res.send("Hello World"));
 // app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
-/*
-const goku = new User({
-    firstName: "Super",
-    lastName: "Saiyan",
-    money: 100,
-    cars:[]
-})
-console.log(goku)
 
-goku.save()
-    .then(function(){
-    User.findOne({firstName:"Super"}).then(function(record){
-        console.log(record.money)
-        })
-    })
-    .catch(err => console.log(err))
-    */
 
