@@ -16,6 +16,7 @@ module.exports = gql`
             incomePerHr: Int!
             aILevel: Int!
             owner: User
+            url: String!
 
         }
 
@@ -64,6 +65,8 @@ module.exports = gql`
         maintenanceLog: [String]
         incomePerHr: Int!
         aILevel: Int!
+        owner: ID!
+        url: String!
     }
 
     input UpdateCarInput {
@@ -79,6 +82,8 @@ module.exports = gql`
         maintenanceLog: [String]
         incomePerHr: Int
         aILevel: Int
+        owner: ID
+        url: String
     }
 
     type DeleteCarPayload {

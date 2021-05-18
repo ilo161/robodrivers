@@ -1,4 +1,5 @@
 import {  gql, useQuery } from '@apollo/client';
+import '../stylesheets/cars_index.css';
 
 // import ExchangeRates from "./exchange_rates"
 // import Dogs from "./dogs"
@@ -41,6 +42,7 @@ const ALL_CARS = gql`
       maintenanceLog
       incomePerHr
       aILevel
+      url
       owner {
         firstName
       }
@@ -67,6 +69,21 @@ function ExchangeRates() {
   ));
 }
 
+//good place for a lazy query
+const CarShow = ({}) => {
+  const REQUEST_CAR = gql`
+    query RequestCar($id: ID) {
+      car(id: $id) {
+        model
+        VIN
+        isWorking
+      }
+    }
+  `;
+
+  const {loading, error, data} = useQuery()
+}
+
 const CarsIndex = () => {
   const { loading, error, data } = useQuery(ALL_CARS);
 
@@ -82,7 +99,7 @@ const CarsIndex = () => {
       maintenanceLog,
       incomePerHr,
       aILevel,
-      owner}) => (
+      owner, url}) => (
     <li key={VIN}> {color}
       {model} +
       {VIN} +
@@ -92,12 +109,12 @@ const CarsIndex = () => {
       {maintenanceLog}$$ +
       {incomePerHr}$$ +
       Level {aILevel} + : {model}
-      &&&&&&{owner.firstName}</li>
+      &&&&&&{owner.firstName}++<img src={url} width="100px" height="100px"/></li>
   ))
 
 
   return(
-    <ul>
+    <ul className="allcars">
       {color_model}
     </ul>
   )

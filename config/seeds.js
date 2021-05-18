@@ -31,95 +31,108 @@ const carsArr = [{
     color: "Blue",
     year: 2021,
     VIN: "tms9822",
-    owner: "60a185529293eed030af2166"
+    owner: "60a185529293eed030af2166",
+    url: "https://my-yelpy-seeds.s3-us-west-1.amazonaws.com/car_images/tesla_s_blue.jpeg"
 }, {
     mileage: 0,
     make: "Tesla",
     model: "Model S",
-    color: "Yellow",
+    color: "Red",
     year: 2021,
     VIN: "tms6710",
-    owner: "60a185529293eed030af2166"
+    owner: "60a185529293eed030af2166",
+    url: "https://my-yelpy-seeds.s3-us-west-1.amazonaws.com/car_images/tesla_s_red.jpeg"
 }, {
     mileage: 0,
     make: "Tesla",
     model: "Model X",
-    color: "Orange",
+    color: "Metallic",
     year: 2021,
     VIN: "tmx9432",
-    owner: "60a185529293eed030af2166"
+    owner: "60a185529293eed030af2166",
+    url: "https://my-yelpy-seeds.s3-us-west-1.amazonaws.com/car_images/tesla_x_metallic.jpeg"
 }, {
     mileage: 0,
     make: "Tesla",
     model: "Model SX",
-    color: "Red",
+    color: "Pearl",
     year: 2021,
     VIN: "tmsx6718",
-    owner: "60a185529293eed030af2166"
+    owner: "60a185529293eed030af2166",
+    url: "https://my-yelpy-seeds.s3-us-west-1.amazonaws.com/car_images/tesla_x_pearl.jpeg"    
 }, {
     mileage: 0,
     make: "Tesla",
     model: "Model 3",
-    color: "Gray",
+    color: "Black",
     year: 2021,
     VIN: "tm36710",
-    owner: "60a185529293eed030af2166"
+    owner: "60a185529293eed030af2166",
+    url: "https://my-yelpy-seeds.s3-us-west-1.amazonaws.com/car_images/tesla_3_black.jpeg"
+
 }, {
     mileage: 0,
     make: "Tesla",
     model: "Model 3X",
-    color: "Green",
+    color: "Red",
     year: 2021,
     VIN: "tm3x6382",
-    owner: "60a185529293eed030af2166"
+    owner: "60a185529293eed030af2166",
+    url: "https://my-yelpy-seeds.s3-us-west-1.amazonaws.com/car_images/tesla_3_red.jpeg"
 }, {
     mileage: 0,
     make: "Lucid",
     model: "Lumen",
-    color: "Purple",
+    color: "White",
     year: 2021,
     VIN: "ll17673",
-    owner: "60a185529293eed030af2167"
+    owner: "60a185529293eed030af2167",
+    url: "https://my-yelpy-seeds.s3-us-west-1.amazonaws.com/car_images/lucid_lumen_white.jpg"
 }, {
     mileage: 0,
     make: "Lucid",
     model: "Lumen 2",
-    color: "Pink",
+    color: "Brown",
     year: 2021,
     VIN: "ll28903",
-    owner: "60a185529293eed030af2167"
+    owner: "60a185529293eed030af2167",
+    url: "https://my-yelpy-seeds.s3-us-west-1.amazonaws.com/car_images/lucid_lumen2_brown.jpg"
 }, {
     mileage: 0,
     make: "Photon",
     model: "Mc2",
-    color: "White",
+    color: "Graphite-Grey",
     year: 2021,
     VIN: "pmc21972",
-    owner: "60a185529293eed030af2167"
+    owner: "60a185529293eed030af2167",
+    url: "https://my-yelpy-seeds.s3-us-west-1.amazonaws.com/car_images/photon_mc2_graphite_grey.jpeg"
 }, {
     mileage: 0,
     make: "Photon",
     model: "Mc3",
-    color: "Lime",
+    color: "Snow",
     year: 2021,
     VIN: "pmc36732",
-    owner: "60a185529293eed030af2167"
+    owner: "60a185529293eed030af2167",
+    url: "https://my-yelpy-seeds.s3-us-west-1.amazonaws.com/car_images/photon_mc3_snow.jpeg"
 }, {
     mileage: 0,
     make: "Cyber",
     model: "0ms",
-    color: "Black",
+    color: "White",
     year: 2021,
     VIN: "c01724",
-    owner: "60a185529293eed030af2167"
+    owner: "60a185529293eed030af2167",
+    url: "https://my-yelpy-seeds.s3-us-west-1.amazonaws.com/car_images/cyber_0ms_white.jpg"
 }, {
     mileage: 0,
     make: "Cyber",
     model: "10ms",
-    color: "Teal",
+    color: "Grey",
     year: 2021,
     VIN: "c108975",
-    owner: "60a185529293eed030af2167"
+    owner: "60a185529293eed030af2167",
+    url: "https://my-yelpy-seeds.s3-us-west-1.amazonaws.com/car_images/cyber_10ms_grey.jpg"
 }
 ]
 
