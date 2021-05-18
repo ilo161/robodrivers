@@ -1,4 +1,5 @@
-import {  gql, useQuery } from '@apollo/client';
+import {useState, useEffect} from "react"
+import {  gql, useQuery, useLazyQuery } from '@apollo/client';
 import '../stylesheets/cars_index.css';
 
 // import ExchangeRates from "./exchange_rates"
@@ -53,6 +54,39 @@ const ALL_CARS = gql`
   }
 `
 
+const App = () => {
+  const [selectedCarId, setSelectedCarId] = useState("");
+  console.log("SELCID", selectedCarId)
+  
+  //button callback from CarShow
+  const loadCarToState = ( e, id ) => {
+    console.log("THE THING!", id);
+    setSelectedCarId(id);
+  }
+
+  // loadCarToState = loadCarToState.bind(this);
+//   client
+//   .query({
+//     query: gql`
+//       query GetRates {
+//         rates(currency: "USD") {
+//           currency
+//         }
+//       }
+//     `
+//   })
+//   .then(result => console.log(result));
+  return (
+    <div className="master">
+        <p>Homepage22</p>
+        {/* <ExchangeRates/> */}
+        {/* <CarsIndex/> */}
+        <CarShow loadCarToState={loadCarToState} 
+                  selectedCarId={selectedCarId}/>
+    </div>
+  );
+}
+
 function ExchangeRates() {
   const { loading, error, data } = useQuery(EXCHANGE_RATES);
 
@@ -70,18 +104,88 @@ function ExchangeRates() {
 }
 
 //good place for a lazy query
-const CarShow = ({}) => {
-  const REQUEST_CAR = gql`
+const CarShow = ({loadCarToState, selectedCarId}) => {
+  // This is on main below
+  // const [selectedCarId, setSelectedCarId] = useState(null);
+  console.log("CSHOW", selectedCarId)
+
+   const REQUEST_CAR = gql`
     query RequestCar($id: ID) {
       car(id: $id) {
+        make
         model
-        VIN
-        isWorking
+        aILevel
+        incomePerHr
+        owner{
+          firstName
+          lastName
+        }
       }
     }
   `;
+  const carId = "60a185da10d2cdd04d5ef711"
+  const [ loadCar, {loading, called, error, data}] = useLazyQuery(REQUEST_CAR)
 
-  const {loading, error, data} = useQuery()
+
+
+  useEffect(() => {
+
+    if(selectedCarId != ""){
+      console.log("use Effect in effect", selectedCarId)
+      loadCar({
+                variables: { id: selectedCarId },
+                notifyOnNetworkStatusChange: true
+              })
+    }}, [selectedCarId])
+
+  // useEffect(() => {
+
+  // })
+    
+    
+    
+
+ 
+  
+  // setSelectedCarId(carId)
+
+  
+
+    if (called && loading) return <p>Loading ...</p>
+    if (!called) {
+       return <button onClick={(e) => {
+        console.log("inside", carId)
+        loadCarToState(e, carId)
+        }} >Load car</button>
+    }
+    console.log(data)
+    const car = data ? data.car ? data.car : null : null
+    return (
+      <div>
+          <p>hi</p>
+          {/* <p>{data ? data.car : "no data"}</p> */}
+          <p>{car ? car.model : "no car data"}</p>
+      </div>
+          
+           
+    )
+
+    // {data && data.car && <div><img src={data.car.url} /> </div>}
+          
+    //       {data.car ? <ul> <li>{car.make}</li>
+    //                       <li>{car.model}</li>
+    //                       <li>{car.incomePerHr}</li>
+    //                       <li>{car.incomePerHr}</li>
+    //                 </ul>
+    //        : <p> no car</p>}
+          
+        
+
+    
+    
+    // <h1>Hello {data.greeting.message}!</h1>;
+
+    
 }
 
 const CarsIndex = () => {
@@ -122,26 +226,7 @@ const CarsIndex = () => {
 
 
 
-const App = () => {
-//   client
-//   .query({
-//     query: gql`
-//       query GetRates {
-//         rates(currency: "USD") {
-//           currency
-//         }
-//       }
-//     `
-//   })
-//   .then(result => console.log(result));
-  return (
-    <div className="master">
-        <p>Homepage22</p>
-        {/* <ExchangeRates/> */}
-        <CarsIndex/>
-    </div>
-  );
-}
+
 
 export default App;
 
