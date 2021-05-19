@@ -1,15 +1,45 @@
 import {useState, useEffect} from "react"
 import {  gql, useQuery, useLazyQuery } from '@apollo/client';
+import {Button} from "@material-ui/core/"
+import {makeStyles, ThemeProvider, createMuiTheme} from "@material-ui/core/styles"
+import {
+   orange,
+   green,
+   lightGreen,
+  blueGrey,
+  lightBlue,
+  grey
+} from "@material-ui/core/colors"
 import '../stylesheets/cars_index.css';
+import NavBar from "./nav/navBar"
+
+import CardShowCard from "./cards/carShowCard"
+
 
 // import ExchangeRates from "./exchange_rates"
 // import Dogs from "./dogs"
 import '../stylesheets/App.css';
 
+
 // uri:`http://localhost:4000/graphql`,
 //dogs
 // uri: 'https://71z1g.sse.codesandbox.io/',
 //xchange
+
+const theme = createMuiTheme({
+  palette:{
+    primary: {
+      main: lightBlue[600],
+      light: lightBlue[300],
+      dark: grey[50]
+    },
+    secondary: {
+      main: green[500],
+      dark: green[900]
+
+    }
+  }
+})
 
 
 const EXCHANGE_RATES = gql`
@@ -77,13 +107,18 @@ const App = () => {
 //   })
 //   .then(result => console.log(result));
   return (
-    <div className="master">
-        <p>Homepage22</p>
-        {/* <ExchangeRates/> */}
-        {/* <CarsIndex/> */}
-        <CarShow loadCarToState={loadCarToState} 
-                  selectedCarId={selectedCarId}/>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="master">
+        <NavBar/>
+          <p>Homepage22</p>
+          {/* <ExchangeRates/> */}
+          {/* <CarsIndex/> */}
+          {/* <CarShow loadCarToState={loadCarToState} 
+                    selectedCarId={selectedCarId}/> */}
+          <CardShowCard loadCarToState={loadCarToState} 
+                    selectedCarId={selectedCarId}/>
+      </div>
+     </ThemeProvider>
   );
 }
 
@@ -162,6 +197,9 @@ const CarShow = ({loadCarToState, selectedCarId}) => {
     const car = data ? data.car ? data.car : null : null
     return (
       <div>
+        <Button variant="contained" style={{
+          backgroundColor: '#1D3643'
+        }}>I am Groot button</Button>
           <p>hi</p>
           {/* <p>{data ? data.car : "no data"}</p> */}
           <p>{car ? car.model : "no car data"}</p>
