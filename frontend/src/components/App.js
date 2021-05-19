@@ -17,7 +17,8 @@ import {
 import '../stylesheets/cars_index.css';
 import NavBar from "./nav/navBar"
 
-import CarShowCard from "./cards/carShowCard"
+import UserShowCard from "./cards/userShowCard";
+import CarShowCard from "./cards/carShowCard";
 
 
 // import ExchangeRates from "./exchange_rates"
@@ -43,26 +44,55 @@ const theme = createMuiTheme({
 // This gets all the information at start....
 // There's no need to send/use useEffect Inside CardShow....
 // Unless I just get the Id's... but then thats N + 1... hmm
+// const ALL_CARS = gql`
+//   query getAllCars {
+//     allCars{
+//       id
+//       make
+//       model
+//       mileage
+//       year
+//       aILevel
+//       incomePerHr
+//       isWorking
+//       VIN
+//       url
+//       owner{
+//         firstName
+//         lastName
+//       }
+//     }
+//   }
+// `
+
+// This has two keys. all cars and users. to prevent double query
 const ALL_CARS = gql`
-  query getAllCars {
-    allCars{
-      id
-      make
-      model
-      mileage
-      year
-      aILevel
-      incomePerHr
-      isWorking
-      VIN
-      url
-      owner{
-        firstName
-        lastName
-      }
+query getAllCarsWithUsers {
+ allCars {
+    id
+    make
+    model
+    mileage
+    year
+    aILevel
+    incomePerHr
+    isWorking
+    VIN
+    url
+    owner {
+      firstName
+      lastName
     }
   }
-`
+  users {
+    id
+    firstName
+    lastName
+    money
+  }
+}`
+
+// const ALL_USERS =
 const UPDATE_CAR = gql`
     mutation UpdateCar($id: ID, $input: UpdateCarInput!) {
       updateCar(id: $id, input: $input) {
@@ -77,32 +107,15 @@ const UPDATE_CAR = gql`
         VIN
         url
         owner{
+          id
           firstName
           lastName
+          money
         }
       }
 }`
 
-// const UPDATE_CAR = gql`
-//     mutation UpdateCar($id: ID, $input: UpdateCarInput!) {
-//       updateCar(id: $id, input: $input) {
-//         id
-//         make
-//         model
-//         mileage
-//         year
-//         aILevel
-//         incomePerHr
-//         isWorking
-//         VIN
-//         url
-//         owner{
-//           firstName
-//           lastName
-//         }
-//       }
-//     }
-//   `
+
 
 const App = () => {
   const [selectedCarId, setSelectedCarId] = useState("");
@@ -119,6 +132,7 @@ const App = () => {
 
 
   let allCarsArr;
+  let allUsersArr;
 
   console.log("SELCID", selectedCarId)
   // if(dataU != undefined){
@@ -159,6 +173,17 @@ const App = () => {
             )
   }) : null
 
+  allUsersArr = data ? data.users.map(owner => {
+    console.log("OWNER?", owner)
+    // const {owner} = car;
+    return (<Grid item xs={12} sm={6} md={4} lg={3}>
+              <UserShowCard key={owner.id} data={owner}/>
+            </Grid>
+            )
+  }) : null
+
+
+
   
 
   return (
@@ -171,6 +196,10 @@ const App = () => {
                       selectedCarId={selectedCarId}/> */}
             {/* <CardShowCard loadCarToState={loadCarToState} 
                       selectedCarId={selectedCarId}/> */}
+
+          <Grid container spacing={2} justify="center">
+            {allUsersArr}
+          </Grid>
           <Grid container spacing={2} justify="center">
             {allCarsArr}
           </Grid>

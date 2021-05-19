@@ -148,8 +148,10 @@ const CarShowCard = ({loadCarToState, selectedCarId, data, updateCarMutation}) =
     // }
     const car = data ? data : null 
     let nextIncome; 
+    let nextAILevel;
     if(car){
-      nextIncome = (car.incomePerHr + (car.aILevel * 25))
+      nextIncome = (car.incomePerHr + (car.aILevel * 25));
+      nextAILevel = (car.aILevel + 1);
     }
     // console.log("dataa", car.model, car.id)
     
@@ -236,7 +238,7 @@ const CarShowCard = ({loadCarToState, selectedCarId, data, updateCarMutation}) =
                   onClick={() => updateCarMutation({
                       variables: {
                          id: car.id, 
-                         input: {aILevel: (car.aILevel + 1),
+                         input: {aILevel: nextAILevel,
                                 incomePerHr: nextIncome  
                                 }
                       }
