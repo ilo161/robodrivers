@@ -83,6 +83,7 @@ const UpgradeCarButton = styled(Button)({
 
 const CarShowCard = ({loadCarToState, selectedCarId, data, updateCarMutation}) => {
     const classes = useStyles()
+    
     // console.log("NEW", data)
      // This is on main below
   // const [selectedCarId, setSelectedCarId] = useState(null);
@@ -146,7 +147,11 @@ const CarShowCard = ({loadCarToState, selectedCarId, data, updateCarMutation}) =
     //     }} >Load car</button>
     // }
     const car = data ? data : null 
-    // console.log("dataa", car)
+    let nextIncome; 
+    if(car){
+      nextIncome = (car.incomePerHr + (car.aILevel * 25))
+    }
+    // console.log("dataa", car.model, car.id)
     
 
     return(
@@ -229,7 +234,12 @@ const CarShowCard = ({loadCarToState, selectedCarId, data, updateCarMutation}) =
 
               <UpgradeCarButton 
                   onClick={() => updateCarMutation({
-                      variables: {id: car.id, input: {aILevel: 1} }
+                      variables: {
+                         id: car.id, 
+                         input: {aILevel: (car.aILevel + 1),
+                                incomePerHr: nextIncome  
+                                }
+                      }
                       })}>
                       Upgrade Ai  
               </UpgradeCarButton>

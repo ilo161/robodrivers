@@ -81,8 +81,28 @@ const UPDATE_CAR = gql`
           lastName
         }
       }
-    }
-  `
+}`
+
+// const UPDATE_CAR = gql`
+//     mutation UpdateCar($id: ID, $input: UpdateCarInput!) {
+//       updateCar(id: $id, input: $input) {
+//         id
+//         make
+//         model
+//         mileage
+//         year
+//         aILevel
+//         incomePerHr
+//         isWorking
+//         VIN
+//         url
+//         owner{
+//           firstName
+//           lastName
+//         }
+//       }
+//     }
+//   `
 
 const App = () => {
   const [selectedCarId, setSelectedCarId] = useState("");
@@ -94,8 +114,8 @@ const App = () => {
 
   // const [ updateCarQuery, {loading: loadingU, called: calledU, 
   //                   error: errorU, data: dataU}] = useLazyQuery(UPDATE_CAR)
-  // const [ updateCarMutation, {loading: loadingU, called: calledU, 
-  //                   error: errorU, data: dataU}] = useMutation(UPDATE_CAR)
+  const [ updateCarMutation, {loading: loadingU, called: calledU, 
+                    error: errorU, data: dataU}] = useMutation(UPDATE_CAR)
 
 
   let allCarsArr;
@@ -133,8 +153,7 @@ const App = () => {
     return (<Grid item xs={12} sm={6} md={4} lg={3}>
               <CarShowCard 
                 key={car.VIN} data={car}
-                // updateCarMutation={updateCarMutation}
-                updateCarMutation={5}
+                updateCarMutation={updateCarMutation}
               />
             </Grid>
             )

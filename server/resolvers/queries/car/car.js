@@ -1,3 +1,11 @@
+const { 
+  ApolloError 
+} = require('apollo-server');
+
 module.exports = async(_, args, {models}) => {
-    return await models.Car.findById({_id: args.id})
+    try {
+        return await models.Car.findById({_id: args.id})
+    } catch(error){
+        throw new ApolloError(error)
+    }
 }

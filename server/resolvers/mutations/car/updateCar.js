@@ -1,27 +1,36 @@
 //make sure to add error handling
 const { 
-  ApolloServer,
   ApolloError 
 } = require('apollo-server');
 
 
 module.exports = async (_, {id, input}, {models}) => {
     try{
+        console.log("updating...")
+        const newAndUpdated = await models.Car.findByIdAndUpdate(
+            {_id: id},
+            input,
+            {new: true,
+            useFindAndModify: false}
+            )
 
-    
+        return newAndUpdated
+
+    /*
         const carToUpdate = await models.Car.findOne({_id: id})
         // models.User.findByIdAndUpdate(id,  input, {new: true, runValidator: true})
         console.log("UPDATE CAR!")
         Object.keys(input).forEach(key => {
             if(key === "aILevel"){
                 carToUpdate[key] += 1;
-                carToUpdate["incomePerHr"] *= carToUpdate["aILevel"]
+                carToUpdate["incomePerHr"] = (carToUpdate["aILevel"] * carToUpdate["incomePerHr"]) / 2
             } else {
                 carToUpdate[key] = input[key];
             } 
             
         });
 
+*/
 //     instance.save(function(err,savedObj){
 //     // some error occurs during save
 //     if(err) throw err;
@@ -40,6 +49,9 @@ module.exports = async (_, {id, input}, {models}) => {
         //     } 
         //         // else if(!savedObj) throw new Error("no Document Model Found")
         // });
+
+/*
+
         return await carToUpdate.save(function(err, savedObj){
             if(err){
                 throw err;
@@ -50,6 +62,9 @@ module.exports = async (_, {id, input}, {models}) => {
             } 
                 // else if(!savedObj) throw new Error("no Document Model Found")
         });
+
+
+*/
         // console.log("so close return", updatedCar)
         // return updatedCar;
 
