@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { styled } from '@material-ui/core/styles';
 import {
+  Box,
   Button,
   ButtonGroup,
   Card,
@@ -17,32 +18,17 @@ import {
   CardMedia,
 } from '@material-ui/core/';
 import "../../stylesheets/card_show.css"
-// import CardActionArea from '@material-ui/core/CardActionArea';
-// import CardActions from '@material-ui/core/CardActions';
-// import CardContent from '@material-ui/core/CardContent';
-// import CardMedia from '@material-ui/core/CardMedia';
 
 
-
-
-// const useStyles = makeStyles(() => ({
-//   root: {
-//     flexGrow: 1,
-//   },
-//   menuButton: {
-//     // marginRight: theme.spacing(2),
-//   },
-//   title: {
-//     flexGrow: 1,
-//   },
-//   topBar: {
-//       backgroundColor: '#1D3643'
-//   }
-// }));
-
+// These Styles function to solicite whether a car is working or not
 const useStyles = makeStyles(theme => ({
-  root: {
-    maxWidth: "350px"
+  rootW: {
+    maxWidth: "350px",
+    background: 'linear-gradient(0deg, #090, #FFF, #FFF, #FFF)'
+  },
+  rootNW: {
+    maxWidth: "350px",
+    background: 'linear-gradient(0deg, #F11, #FFF, #FFF, #FFF)'
   },
   primaryLight: {
         backgroundColor: theme.palette.primary.dark, 
@@ -50,6 +36,9 @@ const useStyles = makeStyles(theme => ({
   },
   isWorkingText: {
     color: theme.palette.secondary.light
+  },
+  mb: {
+    marginBottom: 15
   }
 
 }));
@@ -78,23 +67,23 @@ const CancelDriverButton = styled(Button)({
   height: 28,
 });
 
+const UpgradeCarButton = styled(Button)({
+  background: 'dodgerblue',
+  marginLeft: "8px",
+  padding: '4px 10px',
+  fontSize: "0.8125rem",
+  border: 0,
+  borderRadius: 3,
+  boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+  color: 'white',
+  height: 28,
+});
 
 
-// const ButtonSmPadding = (car) => {
-//   const classes = useStyles()
-//   return (<ButtonGroup className={classes.root}  variant="contained">
-//             <Button  >
-//               {car ? car.make : null}
-//             </Button>
-//             <Button >
-//               {car ? car.model : null}
-//             </Button>
-//           </ButtonGroup>)
-// }
 
-
-const CarShowCard = ({loadCarToState, selectedCarId}) => {
+const CarShowCard = ({loadCarToState, selectedCarId, data}) => {
     const classes = useStyles()
+    console.log("NEW", data)
      // This is on main below
   // const [selectedCarId, setSelectedCarId] = useState(null);
   console.log("CSHOW", selectedCarId)
@@ -104,6 +93,8 @@ const CarShowCard = ({loadCarToState, selectedCarId}) => {
       car(id: $id) {
         make
         model
+        mileage
+        year
         aILevel
         incomePerHr
         isWorking
@@ -117,124 +108,131 @@ const CarShowCard = ({loadCarToState, selectedCarId}) => {
     }
   `;
   const carId = "60a185da10d2cdd04d5ef711"
-  const [ loadCar, {loading, called, error, data}] = useLazyQuery(REQUEST_CAR)
+  // const carId = "60a185da10d2cdd04d5ef710"
+  // const [ loadCar, {loading, called, error, data2}] = useLazyQuery(REQUEST_CAR)
 
   const subtitleWorking = (
-          <Typography variant="body1" color="secondary" component="span">
+          <Typography  variant="body1" color="primary" component="span">
             Making Money
           </Typography>)
 
   const subtitleNotWorking =  (
-          <Typography variant="body2" color="textSecondary" component="span">
+          <Typography  variant="body1" color="primary" component="span">
             Parked
           </Typography>)
 
-  useEffect(() => {
+  // This useEffect watches the carId and fires a Query when it receives ID info
+  // useEffect(() => {
 
-    if(selectedCarId != ""){
-      console.log("use Effect in effect", selectedCarId)
-      loadCar({
-                variables: { id: selectedCarId },
-                notifyOnNetworkStatusChange: true
-              })
-    }}, [selectedCarId])
+  //   if(selectedCarId != ""){
+  //     console.log("use Effect in effect", selectedCarId)
+  //     loadCar({
+  //               variables: { id: selectedCarId },
+  //               notifyOnNetworkStatusChange: true
+  //             })
+  //   }
+  // }, [selectedCarId])
 
 
-    if (called && loading) return <p>Loading ...</p>
-    if (!called) {
-       return <button onClick={(e) => {
-        console.log("inside", carId)
-        loadCarToState(e, carId)
-        }} >Load car</button>
-    }
-    const car = data ? data.car ? data.car : null : null
+    // if (called && loading) return <p>Loading ...</p>
+    // if (!called) {
+    //    return <button onClick={(e) => {
+    //     console.log("inside", carId)
+    //     loadCarToState(e, carId)
+    //     }} >Load car</button>
+    // }
+    const car = data ? data : null 
     console.log("dataa", car)
     
 
     return(
+      
        <div>
-         <p>hi car show TWO!! card</p>
-         <p>{data ? data.car.url : "no url"}</p>
-          <Card className={classes.root}>
+         {car ?
+          <Card className={car.isWorking ? classes.rootW : classes.rootNW}>
             <CardActionArea>
               <img className="resize-fit-center" src={car ? car.url : null}/>
-              <CardContent >
-          <ButtonGroup  variant="contained">
-            <Button color="primary" >
-              {car ? car.make : null}
-            </Button>
-            <Button className={classes.primaryLight}>
-              {car ? car.model : null}
-            </Button>
-          </ButtonGroup>
-          </CardContent>
-          <CardContent>
-          <ButtonGroup size="xs" variant="contained">
-            <Button color="primary" >
-              {car ? "Income/Hr" : null}
-            </Button>
-            <Button className={classes.primaryLight}>
-              {car ? car.incomePerHr : null}
-            </Button>
-            <Button color="primary" >
-              {car ? "aILevel" : null}
-            </Button>
-            <Button className={classes.primaryLight}>
-              {car ? car.aILevel : null}
-            </Button>
-          </ButtonGroup>
-          
-          {/* <ButtonGroup size="small" variant="contained">
-            <Button color="primary" >
-              {car ? "Owner" : null}
-            </Button>
-            <Button className={classes.primaryLight}>
-              {car ? `${car.owner.firstName} ${car.owner.lastName}` : null}
-            </Button>
-          </ButtonGroup> */}
-          
-          <Typography gutterBottom variant="h5" component="h2">
-            Status: {car.isWorking ? subtitleWorking : subtitleNotWorking}
-          </Typography>
-          <Typography gutterBottom variant="h5" component="span">
-            Owner:
-            <Typography variant="subtitle1" component="span">
-              {car ? `   ${car.owner.firstName} ${car.owner.lastName}` : null}  
-            </Typography>
-          </Typography>
-          <Typography gutterBottom variant="h5" component="h2">
-            VIN: {car ? car.VIN : ""}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardContent>
-      <Typography variant="body2" color="textSecondary" component="span">
-            Owner: {car ? `${car.owner.firstName} ${car.owner.lastName}` : "Ai Owned"}
-      </Typography>
-      </CardContent>
-      <CardActions>
-        {car ? !car.isWorking ? 
-        <SendDriverButton>
-          Send to Work
-        </SendDriverButton>
+              <CardContent>
+                <Box mb={2}> 
+                  <ButtonGroup  variant="contained">
+                    <Button color="primary" >
+                      {car ? car.make : null}
+                    </Button>
+                    <Button className={classes.primaryLight}>
+                      {car ? car.model : null}
+                    </Button>
+                  </ButtonGroup>
+                </Box>
+              
+                <Box mb={2}> 
+                  <ButtonGroup variant="contained">
+                    {/* Left Button */}
+                    <Button color="primary" >
+                      {car ? "$$/Hr" : null}
+                    </Button>
+                    <Button className={classes.primaryLight}>
+                      {car ? car.incomePerHr : null}
+                    </Button>
+                    {/* Right Button */}
+                    <Button color="primary" >
+                      {car ? "aI-Lvl" : null}
+                    </Button>
+                    <Button className={classes.primaryLight}>
+                      {car ? car.aILevel : null}
+                    </Button>
+                  </ButtonGroup>
+                </Box>
 
-        :
-        <CancelDriverButton>Cancel RoboDriver</CancelDriverButton>
-         : null}
-         
+                {/* Middle Card Text */}
+                <Box mt={1}>
+                  <Typography variant="h5" component="h2">
+                    Status: {car.isWorking ? subtitleWorking : subtitleNotWorking}
+                  </Typography>
+                  
+                  <Typography variant="h5" component="h2">
+                    Year: {car ? car.year : 3030}
+                  </Typography>
 
-        <SendDriverButton>
-          Send to Work
-        </SendDriverButton>
-        
-      </CardActions>
-    </Card>
+                  <Typography variant="h5" component="h2">
+                    Mileage: {car.mileage ? car.mileage : 0}
+                  </Typography>
+                  
+                  <Typography  variant="h5" component="h2">
+                    VIN: {car ? car.VIN : ""}
+                  </Typography>
+                </Box>
+          
+
+              {/* Owner Info */}
+                {/* <Typography variant="body2" color="textSecondary" component="span">
+                      Owner: {car ? `${car.owner.firstName} ${car.owner.lastName}` : "Ai Owned"}
+                </Typography> */}
+              </CardContent>
+            </CardActionArea>
+
+              {/* Button to Send Query Hire/Cancel/Upgrade */}
+            <CardActions>
+              {car ? !car.isWorking ? 
+              <SendDriverButton>
+                Hyre Car
+              </SendDriverButton>
+
+              :
+              <CancelDriverButton>
+                Cancel Hyre
+              </CancelDriverButton>
+              : null}
+
+              <UpgradeCarButton>Upgrade Ai</UpgradeCarButton>
+            </CardActions>
+ 
+          </Card>
+        : "no car"}
        </div>
+
     )
 }
 
-{/* <Button size="small" variant="contained" color="primary">
-          Cancel RoboDriver
-        </Button> */}
+
 
 export default CarShowCard;

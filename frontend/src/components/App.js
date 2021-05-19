@@ -1,6 +1,10 @@
 import {useState, useEffect} from "react"
 import {  gql, useQuery, useLazyQuery } from '@apollo/client';
-import {Button} from "@material-ui/core/"
+import {Button,
+        Container,
+        CssBaseline,
+        Grid
+        } from "@material-ui/core/"
 import {makeStyles, ThemeProvider, createMuiTheme} from "@material-ui/core/styles"
 import {
    orange,
@@ -13,18 +17,13 @@ import {
 import '../stylesheets/cars_index.css';
 import NavBar from "./nav/navBar"
 
-import CardShowCard from "./cards/carShowCard"
+import CarShowCard from "./cards/carShowCard"
 
 
 // import ExchangeRates from "./exchange_rates"
 // import Dogs from "./dogs"
 import '../stylesheets/App.css';
 
-
-// uri:`http://localhost:4000/graphql`,
-//dogs
-// uri: 'https://71z1g.sse.codesandbox.io/',
-//xchange
 
 const theme = createMuiTheme({
   palette:{
@@ -41,52 +40,39 @@ const theme = createMuiTheme({
   }
 })
 
-
-const EXCHANGE_RATES = gql`
-  query GetExchangeRates {
-    rates(currency: "USD") {
-      currency
-      rate
-    }
-  }
-`;
-// mileage
-//       make
-//       year
-//       isWorking
-//       isSummoned
-//       hadAccident
-//       maintenanceLog
-//       incomePerHr
-//       aILevel
-//       owner
+// This gets all the information at start....
+// There's no need to send/use useEffect Inside CardShow....
+// Unless I just get the Id's... but then thats N + 1... hmm
 const ALL_CARS = gql`
   query getAllCars {
     allCars{
       id
-      color
+      make
       model
-      VIN
-      isWorking
-      isSummoned
-      hadAccident
-      maintenanceLog
-      incomePerHr
+      mileage
+      year
       aILevel
+      incomePerHr
+      isWorking
+      VIN
       url
-      owner {
+      owner{
         firstName
+        lastName
       }
-
-
-      
     }
   }
 `
 
 const App = () => {
   const [selectedCarId, setSelectedCarId] = useState("");
+  const { loading, error, data } = useQuery(ALL_CARS);
+
   console.log("SELCID", selectedCarId)
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :</p>;
+  
   
   //button callback from CarShow
   const loadCarToState = ( e, id ) => {
@@ -94,36 +80,51 @@ const App = () => {
     setSelectedCarId(id);
   }
 
-  // loadCarToState = loadCarToState.bind(this);
-//   client
-//   .query({
-//     query: gql`
-//       query GetRates {
-//         rates(currency: "USD") {
-//           currency
-//         }
-//       }
-//     `
-//   })
-//   .then(result => console.log(result));
+  const allCarsArr = data ? data.allCars.map(car => {
+    return (<Grid item xs={12} sm={6} md={4} lg={3}>
+              <CarShowCard key={car.VIN} data={car}/>
+            </Grid>
+            )
+  }) : null
+
   return (
     <ThemeProvider theme={theme}>
-      <div className="master">
-        <NavBar/>
-          <p>Homepage22</p>
-          {/* <ExchangeRates/> */}
-          {/* <CarsIndex/> */}
-          {/* <CarShow loadCarToState={loadCarToState} 
-                    selectedCarId={selectedCarId}/> */}
-          <CardShowCard loadCarToState={loadCarToState} 
-                    selectedCarId={selectedCarId}/>
-      </div>
+      <Container maxWidth="lg">
+        <div className="master">
+          <NavBar/>
+            {/* <CarsIndex/> */}
+            {/* <CarShow loadCarToState={loadCarToState} 
+                      selectedCarId={selectedCarId}/> */}
+            {/* <CardShowCard loadCarToState={loadCarToState} 
+                      selectedCarId={selectedCarId}/> */}
+          <Grid container spacing={2} justify="center">
+            {allCarsArr}
+          </Grid>
+            {/* <CardShowCard  loadCarToState={loadCarToState} 
+                      selectedCarId={selectedCarId}/> */}
+        </div>
+      </Container>
      </ThemeProvider>
   );
 }
 
+// function ExchangeRates() {
+//   const { loading, error, data } = useQuery(EXCHANGE_RATES);
+
+
+//   if (loading) return <p>Loading...</p>;
+//   if (error) return <p>Error :</p>;
+
+//   return data.rates.map(({ currency, rate }) => (
+//     <div key={currency}>
+//       <p>
+//         {currency}: {rate}
+//       </p>
+//     </div>
+//   ));
+// }
 function ExchangeRates() {
-  const { loading, error, data } = useQuery(EXCHANGE_RATES);
+  const { loading, error, data } = useQuery(ALL_CARS);
 
 
   if (loading) return <p>Loading...</p>;
