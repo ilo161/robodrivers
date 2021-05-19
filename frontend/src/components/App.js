@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react"
-import {  gql, useQuery, useLazyQuery } from '@apollo/client';
+import {  gql, useQuery, useLazyQuery, useMutation } from '@apollo/client';
 import {Button,
         Container,
         CssBaseline,
@@ -63,16 +63,62 @@ const ALL_CARS = gql`
     }
   }
 `
+const UPDATE_CAR = gql`
+    mutation UpdateCar($id: ID, $input: UpdateCarInput!) {
+      updateCar(id: $id, input: $input) {
+        id
+        make
+        model
+        mileage
+        year
+        aILevel
+        incomePerHr
+        isWorking
+        VIN
+        url
+        owner{
+          firstName
+          lastName
+        }
+      }
+    }
+  `
 
 const App = () => {
   const [selectedCarId, setSelectedCarId] = useState("");
+  const [currentData, setCurrentData] = useState({});
+
+  const [updateQueryBool, setUpdateQueryBool] = useState(false);
+
   const { loading, error, data } = useQuery(ALL_CARS);
 
+  // const [ updateCarQuery, {loading: loadingU, called: calledU, 
+  //                   error: errorU, data: dataU}] = useLazyQuery(UPDATE_CAR)
+  // const [ updateCarMutation, {loading: loadingU, called: calledU, 
+  //                   error: errorU, data: dataU}] = useMutation(UPDATE_CAR)
+
+
+  let allCarsArr;
+
   console.log("SELCID", selectedCarId)
+  // if(dataU != undefined){
+  //   console.log("UPDATE!", dataU)
+  // }
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :</p>;
   
+  // Update Car FN for carCard
+  // const updateCarFn = (id, type) => {
+  //   if(type === "aILevel"){
+  //     // const { loading, error, data } = useQuery(ALL_CARS, 
+  //     //         {
+  //     //           variables: { id: selectedCarId, input: true },
+  //     //           notifyOnNetworkStatusChange: true
+  //     //         });
+  //   }
+
+  // }
   
   //button callback from CarShow
   const loadCarToState = ( e, id ) => {
@@ -80,12 +126,21 @@ const App = () => {
     setSelectedCarId(id);
   }
 
-  const allCarsArr = data ? data.allCars.map(car => {
+  
+
+  allCarsArr = data ? data.allCars.map(car => {
+    // setCurrentData(data)
     return (<Grid item xs={12} sm={6} md={4} lg={3}>
-              <CarShowCard key={car.VIN} data={car}/>
+              <CarShowCard 
+                key={car.VIN} data={car}
+                // updateCarMutation={updateCarMutation}
+                updateCarMutation={5}
+              />
             </Grid>
             )
   }) : null
+
+  
 
   return (
     <ThemeProvider theme={theme}>
@@ -100,8 +155,7 @@ const App = () => {
           <Grid container spacing={2} justify="center">
             {allCarsArr}
           </Grid>
-            {/* <CardShowCard  loadCarToState={loadCarToState} 
-                      selectedCarId={selectedCarId}/> */}
+            
         </div>
       </Container>
      </ThemeProvider>
@@ -140,92 +194,92 @@ function ExchangeRates() {
 }
 
 //good place for a lazy query
-const CarShow = ({loadCarToState, selectedCarId}) => {
-  // This is on main below
-  // const [selectedCarId, setSelectedCarId] = useState(null);
-  console.log("CSHOW", selectedCarId)
+// const CarShow = ({loadCarToState, selectedCarId}) => {
+//   // This is on main below
+//   // const [selectedCarId, setSelectedCarId] = useState(null);
+//   console.log("CSHOW", selectedCarId)
 
-   const REQUEST_CAR = gql`
-    query RequestCar($id: ID) {
-      car(id: $id) {
-        make
-        model
-        aILevel
-        incomePerHr
-        owner{
-          firstName
-          lastName
-        }
-      }
-    }
-  `;
-  const carId = "60a185da10d2cdd04d5ef711"
-  const [ loadCar, {loading, called, error, data}] = useLazyQuery(REQUEST_CAR)
+//    const REQUEST_CAR = gql`
+//     query RequestCar($id: ID) {
+//       car(id: $id) {
+//         make
+//         model
+//         aILevel
+//         incomePerHr
+//         owner{
+//           firstName
+//           lastName
+//         }
+//       }
+//     }
+//   `;
+//   const carId = "60a185da10d2cdd04d5ef711"
+//   const [ loadCar, {loading, called, error, data}] = useLazyQuery(REQUEST_CAR)
 
 
 
-  useEffect(() => {
+//   useEffect(() => {
 
-    if(selectedCarId != ""){
-      console.log("use Effect in effect", selectedCarId)
-      loadCar({
-                variables: { id: selectedCarId },
-                notifyOnNetworkStatusChange: true
-              })
-    }}, [selectedCarId])
+//     if(selectedCarId != ""){
+//       console.log("use Effect in effect", selectedCarId)
+//       loadCar({
+//                 variables: { id: selectedCarId },
+//                 notifyOnNetworkStatusChange: true
+//               })
+//     }}, [selectedCarId])
 
-  // useEffect(() => {
+//   // useEffect(() => {
 
-  // })
+//   // })
     
     
     
 
  
   
-  // setSelectedCarId(carId)
+//   // setSelectedCarId(carId)
 
   
 
-    if (called && loading) return <p>Loading ...</p>
-    if (!called) {
-       return <button onClick={(e) => {
-        console.log("inside", carId)
-        loadCarToState(e, carId)
-        }} >Load car</button>
-    }
-    console.log(data)
-    const car = data ? data.car ? data.car : null : null
-    return (
-      <div>
-        <Button variant="contained" style={{
-          backgroundColor: '#1D3643'
-        }}>I am Groot button</Button>
-          <p>hi</p>
-          {/* <p>{data ? data.car : "no data"}</p> */}
-          <p>{car ? car.model : "no car data"}</p>
-      </div>
+//     if (called && loading) return <p>Loading ...</p>
+//     if (!called) {
+//        return <button onClick={(e) => {
+//         console.log("inside", carId)
+//         loadCarToState(e, carId)
+//         }} >Load car</button>
+//     }
+//     console.log(data)
+//     const car = data ? data.car ? data.car : null : null
+//     return (
+//       <div>
+//         <Button variant="contained" style={{
+//           backgroundColor: '#1D3643'
+//         }}>I am Groot button</Button>
+//           <p>hi</p>
+//           {/* <p>{data ? data.car : "no data"}</p> */}
+//           <p>{car ? car.model : "no car data"}</p>
+//       </div>
           
            
-    )
+//     )
 
-    // {data && data.car && <div><img src={data.car.url} /> </div>}
+//     // {data && data.car && <div><img src={data.car.url} /> </div>}
           
-    //       {data.car ? <ul> <li>{car.make}</li>
-    //                       <li>{car.model}</li>
-    //                       <li>{car.incomePerHr}</li>
-    //                       <li>{car.incomePerHr}</li>
-    //                 </ul>
-    //        : <p> no car</p>}
+//     //       {data.car ? <ul> <li>{car.make}</li>
+//     //                       <li>{car.model}</li>
+//     //                       <li>{car.incomePerHr}</li>
+//     //                       <li>{car.incomePerHr}</li>
+//     //                 </ul>
+//     //        : <p> no car</p>}
           
         
 
     
     
-    // <h1>Hello {data.greeting.message}!</h1>;
+//     // <h1>Hello {data.greeting.message}!</h1>;
 
     
-}
+// }
 
 const CarsIndex = () => {
   const { loading, error, data } = useQuery(ALL_CARS);
@@ -269,19 +323,3 @@ const CarsIndex = () => {
 
 export default App;
 
-
-
-{/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}

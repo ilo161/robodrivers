@@ -93,7 +93,7 @@ module.exports = gql`
 
      type Mutation {
         createCar(input: CreateCarInput!) : Car!
-        updateCar(id: ID, input: UpdateCarInput!) : Car!
+        updateCar(id: ID, input: UpdateCarInput!) : Car
         deleteCar(id: ID) : DeleteCarPayload!
         createUser(input: CreateUserInput!) : User!
         updateUser(id: ID, input: UpdateUserInput!) : User!

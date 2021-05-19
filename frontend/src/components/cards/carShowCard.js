@@ -81,9 +81,9 @@ const UpgradeCarButton = styled(Button)({
 
 
 
-const CarShowCard = ({loadCarToState, selectedCarId, data}) => {
+const CarShowCard = ({loadCarToState, selectedCarId, data, updateCarMutation}) => {
     const classes = useStyles()
-    console.log("NEW", data)
+    // console.log("NEW", data)
      // This is on main below
   // const [selectedCarId, setSelectedCarId] = useState(null);
   console.log("CSHOW", selectedCarId)
@@ -107,6 +107,9 @@ const CarShowCard = ({loadCarToState, selectedCarId, data}) => {
       }
     }
   `;
+
+  
+  //Debug Only
   const carId = "60a185da10d2cdd04d5ef711"
   // const carId = "60a185da10d2cdd04d5ef710"
   // const [ loadCar, {loading, called, error, data2}] = useLazyQuery(REQUEST_CAR)
@@ -121,6 +124,7 @@ const CarShowCard = ({loadCarToState, selectedCarId, data}) => {
             Parked
           </Typography>)
 
+  //DEBUG ONLY
   // This useEffect watches the carId and fires a Query when it receives ID info
   // useEffect(() => {
 
@@ -142,7 +146,7 @@ const CarShowCard = ({loadCarToState, selectedCarId, data}) => {
     //     }} >Load car</button>
     // }
     const car = data ? data : null 
-    console.log("dataa", car)
+    // console.log("dataa", car)
     
 
     return(
@@ -223,7 +227,12 @@ const CarShowCard = ({loadCarToState, selectedCarId, data}) => {
               </CancelDriverButton>
               : null}
 
-              <UpgradeCarButton>Upgrade Ai</UpgradeCarButton>
+              <UpgradeCarButton 
+                  onClick={() => updateCarMutation({
+                      variables: {id: car.id, input: {aILevel: 1} }
+                      })}>
+                      Upgrade Ai  
+              </UpgradeCarButton>
             </CardActions>
  
           </Card>
