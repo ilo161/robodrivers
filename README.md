@@ -3,6 +3,8 @@
 
 #### In this century, your car works for you. Send your fully autonomous car out to generate passive income and help the community commute.
 
+#### Note : Project not available for download as I own the secret Key. However you may make your own secret key with MongoDb and DB and use the seeds.js to seed Db.
+
 ### Technologies Used
  * MongoDb 
  * Mongoose
@@ -25,6 +27,7 @@
     * Ability to transfer car to other user via "sale"
     * Introduce EarthQuake to add "accident" to vehicle
     * Introduce Weather to affect rate of accident (Rain, snow...)
+    * Organize seeds.js for other users wanting to fork/pull this project
 
 
 ### HomePage 
