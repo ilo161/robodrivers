@@ -39,7 +39,36 @@
 
 ### Screenshots
 
+#### Batch Buttons
 ![Batch Buttons](https://github.com/ilo161/robodrivers/blob/main/publiq/batch_buttons.png "Batch Buttons")
+   
+#### Single Function Buttons
+![Single Function Buttons](https://github.com/ilo161/robodrivers/blob/main/publiq/indiv_commands.png "Single Function Buttons")
+
+-----
+
+#### Before Image of Upgrade AI Batch
+![Before Image of Upgrade AI Batch](https://github.com/ilo161/robodrivers/blob/main/publiq/ai_level_before.png "Before Image of Upgrade AI Batch")
+
+#### After Image of Upgrade AI Batch
+![After Image of Upgrade AI Batch](https://github.com/ilo161/robodrivers/blob/main/publiq/ai_level_after.png "After Image of Upgrade AI Batch")
+
+________
+#### Image of All Cars Hyred. Notice the Green border
+![Image of All Cars Hyred. Notice the Green border](https://github.com/ilo161/robodrivers/blob/main/publiq/batch_is_hyred.png "Image of All Cars Hyred. Notice the Green border")
+
+#### Image of All Cars Parked. Notice the Red border
+![Image of All Cars Parked. Notice the Red border](https://github.com/ilo161/robodrivers/blob/main/publiq/batch_is_parked.png "Image of All Cars Parked. Notice the Red border")
+
+
+-----
+#### Filter By User 1
+![Filter By User 1](https://github.com/ilo161/robodrivers/blob/main/publiq/filter_user_1.png "Filter By User 1")
+
+#### Filter By User 2
+![Filter By User 2](https://github.com/ilo161/robodrivers/blob/main/publiq/filter_user_2.png "Filter By User 2")
+
+
 
 
 
