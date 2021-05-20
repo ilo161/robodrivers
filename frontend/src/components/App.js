@@ -52,6 +52,7 @@ const App = () => {
   const [updateQueryBool, setUpdateQueryBool] = useState(false);
 
   const { loading, error, data } = useQuery(ALL_CARS);
+  // const { loading, error, data } = useQuery(ALL_CARS);
 
   const [ updateCarMutation, {loading: loadingU, called: calledU, 
                     error: errorU, data: dataU}] = useMutation(UPDATE_CAR)
@@ -68,25 +69,25 @@ const App = () => {
   let allCarsArr = [];
   let allUsersArr;
 
-  useEffect(() => {
-      // Update the document title using the browser API
-      document.title = `user one UP`;
-      if(dataUserCars){
-        allCarsArr = dataUserCars.user.cars.map(car => {
+  // useEffect(() => {
+  //     // Update the document title using the browser API
+  //     document.title = `user one UP`;
+  //     if(dataUserCars){
+  //       allCarsArr = dataUserCars.user.cars.map(car => {
 
-        return (<Grid item xs={12} sm={6} md={4} lg={3}>
-                <CarShowCard 
-                  key={car.VIN} data={car}
-                  updateCarMutation={updateCarMutation}
+  //       return (<Grid item xs={12} sm={6} md={4} lg={3}>
+  //               <CarShowCard 
+  //                 key={car.VIN} data={car}
+  //                 updateCarMutation={updateCarMutation}
 
-                />
-              </Grid>
-              )
-      })
-      }
+  //               />
+  //             </Grid>
+  //             )
+  //     })
+  //     }
         
 
-  },[dataUserCars]);
+  // },[dataUserCars]);
 
   
 

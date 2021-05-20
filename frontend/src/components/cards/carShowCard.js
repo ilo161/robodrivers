@@ -71,6 +71,18 @@ const CancelDriverButton = styled(Button)({
   height: 28,
 });
 
+const SellCarButton = styled(Button)({
+  background: 'red',
+  marginLeft: "8px",
+  padding: '4px 10px',
+  fontSize: "0.8125rem",
+  border: 0,
+  borderRadius: 3,
+  boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+  color: 'white',
+  height: 28,
+});
+
 const UpgradeCarButton = styled(Button)({
   background: 'dodgerblue',
   marginLeft: "8px",
@@ -85,7 +97,14 @@ const UpgradeCarButton = styled(Button)({
 
 
 
+
 const CarShowCard = ({loadCarToState, selectedCarId, data, updateCarMutation}) => {
+    const [displayMainCard, setDisplayMainCard] = useState(true);
+
+    // useEffect(() => {
+    //     console.log("hook activated")
+    // }, [displayMainCard]); 
+
     const classes = useStyles()
     
   // console.log("CSHOW", selectedCarId)
@@ -112,9 +131,11 @@ const CarShowCard = ({loadCarToState, selectedCarId, data, updateCarMutation}) =
 
   
   //Debug Only
-  const carId = "60a185da10d2cdd04d5ef711"
+  // const carId = "60a185da10d2cdd04d5ef711"
   // const carId = "60a185da10d2cdd04d5ef710"
   // const [ loadCar, {loading, called, error, data2}] = useLazyQuery(REQUEST_CAR)
+
+  
 
   const subtitleWorking = (
           <Typography  variant="body1" color="primary" component="span">
@@ -160,7 +181,7 @@ const CarShowCard = ({loadCarToState, selectedCarId, data, updateCarMutation}) =
     return(
       
        <div>
-         {car ?
+         {car ? displayMainCard ?
           <Card className={car.isWorking ? classes.rootW : classes.rootNW}>
             <CardActionArea>
               <img className="resize-fit-center" src={car ? car.url : null}/>
@@ -211,6 +232,13 @@ const CarShowCard = ({loadCarToState, selectedCarId, data, updateCarMutation}) =
                   
                   <Typography  variant="h5" component="h2">
                     VIN: {car ? car.VIN : ""}
+                  </Typography>
+                  <Typography  variant="h5" component="h2"
+                  onClick={() => 
+                  setDisplayMainCard(displayMainCard ? false : true)
+                  }
+                  >
+                    Click: -> {car ? "Info" : ""}
                   </Typography>
                 </Box>
           
@@ -263,7 +291,78 @@ const CarShowCard = ({loadCarToState, selectedCarId, data, updateCarMutation}) =
             </CardActions>
  
           </Card>
-        : "no car"}
+        :
+        <Card className={car.isWorking ? classes.rootW : classes.rootNW}> 
+        <CardActionArea>
+              <img className="resize-fit-center" src={car ? car.url : null}/>
+              <CardContent>
+                <Box mb={2}> 
+                  <ButtonGroup  variant="contained">
+                    <Button color="primary" >
+                      {car ? car.make : null}
+                    </Button>
+                    <Button className={classes.primaryLight}>
+                      {car ? car.model : null}
+                    </Button>
+                  </ButtonGroup>
+                </Box>
+              
+                <Box mb={2}> 
+                  <ButtonGroup variant="contained">
+                    {/* Left Button */}
+                    <Button color="primary" >
+                      {car ? "$$/Hr" : null}
+                    </Button>
+                    <Button className={classes.primaryLight}>
+                      {car ? car.incomePerHr : null}
+                    </Button>
+                    {/* Right Button */}
+                    <Button color="primary" >
+                      {car ? "aI-Lvl" : null}
+                    </Button>
+                    <Button className={classes.primaryLight}>
+                      {car ? car.aILevel : null}
+                    </Button>
+                  </ButtonGroup>
+                </Box>
+
+                {/* Middle Card Text */}
+                <Box mt={1}>
+                  <Typography variant="h5" component="h2">
+                    Status: {car.isWorking ? subtitleWorking : subtitleNotWorking}
+                  </Typography>
+                  
+                  <Typography variant="h5" component="h2">
+                    Owner: {car ? `${car.owner.firstName} ${car.owner.lastName}` : "Ai Owned"}
+                  </Typography>
+                  <Typography  variant="h5" component="h2"
+                    onClick={() => 
+                    setDisplayMainCard(displayMainCard ? false : true)
+                  }
+                  >
+                    Click: -> {car ? "Info" : ""}
+                  </Typography>
+
+                
+                </Box>
+          
+
+        
+              </CardContent>
+            </CardActionArea>
+
+
+            <CardActions>
+              {car ? 
+
+              <SellCarButton>
+                Sell Car 
+              </SellCarButton>
+              :
+              null}
+            </CardActions> 
+            </Card>
+           : "no car"}
        </div>
 
     )

@@ -6,7 +6,7 @@ const {
 
 module.exports = async (_, {id, input}, {models}) => {
 // module.exports = async (_, args, {models}) => {
-    console.log("are u okay?")
+
     try{
         console.log("Correct Batch location", id)
         console.log("Correct Batch location", input)
