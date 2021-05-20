@@ -82,37 +82,17 @@ const HyreAllCarsButton = styled(Button)({
   height: 38,
 });
 
-const ALL_USER_CARS = gql`
-    query oneUserCars($id: ID){
-        user(id: $id) {
-            cars{
-                id
-                isSummoned
-                isWorking
-            }
-        }
-    }`
 
-const UserShowCard = ({ data , data: owner, updateCarMutation, UPDATE_CAR }) => {
-// const UserShowCard = ({ data , data: owner, UPDATE_CAR }) => {
+
+const UserShowCard = ({ data , data: owner, updateCarMutation, UPDATE_CAR, oneUserCarsQuery }) => {
+
     const classes = useStyles();
-
-    if(data){
-        console.log(owner.firstName,"::: ", owner.cars )
-    }
+    // sending null here is very dangerous as it will crash the server... but
+    // won't fail because <Card> action will not render
+    const id = owner ? owner.id : null
 
     // This FN will flip the car object key of isWorking Boolean to it's opposite 
     // as well as isSummoned Boolean
-
-    // HYRECAR function
-    //  owner.cars.forEach(carObj => {
-    //             id = carObj.id
-    //             currentOptions = {isSummoned: carObj.isSummoned, isWorking: carObj.isWorking}
-    //             // console.log("curr", currentOptions)
-    //             input = {isSummoned: carObj.isSummoned ? false : true, isWorking: carObj.isWorking ? false : true}
-    //             // console.log("up", input)
-
-    //             updateCarMutation({variables: { id, input }})
     //OR
     //// This FN will upgrade the AILevel in Car Object to +1 and increase incomePerHr Rate
     const batchUpdateCars = (type) => {
@@ -127,34 +107,30 @@ const UserShowCard = ({ data , data: owner, updateCarMutation, UPDATE_CAR }) => 
         let nextAILevel;
 
         if(type == "summon"){
-                // grab current values and store in variable for fast mutation
             owner.cars.forEach(carObj => {
+
+                // grab current values and store in variable for fast mutation
                 id = carObj.id
-                // currentOptions = {isSummoned: carObj.isSummoned, isWorking: carObj.isWorking}
-                // console.log("curr", currentOptions)
                 input = {isSummoned: true, isWorking: false}
-                // console.log("up", input)
 
                 updateCarMutation({variables: { id, input }})
             }) 
         } else if(type ==="hyre"){
               owner.cars.forEach(carObj => {
+                
                 id = carObj.id
-                // currentOptions = {isSummoned: carObj.isSummoned, isWorking: carObj.isWorking}
-                // console.log("curr", currentOptions)
                 input = {isSummoned: false, isWorking: true}
-                // console.log("up", input)
 
                 updateCarMutation({variables: { id, input }})
+
               })
         } else if(type ==="AI"){
 
             owner.cars.forEach(carObj => {
-                console.log("batch AI up", carObj)
+                // console.log("batch AI up", carObj)
                 id = carObj.id;
                 nextIncome = (carObj.incomePerHr + (carObj.aILevel * 25));
                 nextAILevel = (carObj.aILevel + 1);
-                console.log("id", id, "nextI", nextIncome, "nextlvl", nextAILevel)
 
                 updateCarMutation({
                         variables: {id, 
@@ -173,17 +149,21 @@ const UserShowCard = ({ data , data: owner, updateCarMutation, UPDATE_CAR }) => 
         <Box className={classes.root} display="flex" flexDirection="column" alignItems="center"
              justifyContent="center">
             <Card className={classes.rootCard} variant="outlined">
-                <CardContent>
-                    <Typography align="center">
-                        {owner.firstName}
-                    </Typography>
-                    <Typography align="center">
-                        {owner.lastName}
-                    </Typography>
-                    <Typography align="center">
-                        {owner.money}
-                    </Typography>
-                </CardContent>
+                <CardActionArea 
+                    onClick={() => oneUserCarsQuery({ variables: { id } })}
+                >
+                    <CardContent>
+                        <Typography align="center">
+                            {owner.firstName}
+                        </Typography>
+                        <Typography align="center">
+                            {owner.lastName}
+                        </Typography>
+                        <Typography align="center">
+                            {owner.money}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
                 <CardActions>
                 <Container maxWidth="sm">
                     <Box display="flex" justifyContent="center" >

@@ -14,8 +14,7 @@ module.exports = async(_, args, {models}) => {
         else {
             return await models.Car.find({})
         }
-    }
-    catch(error){
+    } catch(error){
         throw new ApolloError(error)
     }
 }

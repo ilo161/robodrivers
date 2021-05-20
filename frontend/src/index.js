@@ -7,10 +7,6 @@ import './index.css';
 import App from './components/App';
 // import reportWebVitals from './reportWebVitals'; 
 
-// const client = new ApolloClient({
-//   uri: 'https://48p1r2roz4.sse.codesandbox.io',
-//   cache: new InMemoryCache()
-// });
 const client = new ApolloClient({
   uri: 'http://localhost:5001/graphql',
   cache: new InMemoryCache()
@@ -31,6 +27,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
+//client version with error handling, but using different server entry point
 // const client = new ApolloClient({
 //   // The `from` function combines an array of individual links
 //   // into a link chain

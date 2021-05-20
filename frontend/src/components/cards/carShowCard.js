@@ -24,11 +24,14 @@ import "../../stylesheets/card_show.css"
 const useStyles = makeStyles(theme => ({
   rootW: {
     maxWidth: "350px",
-    background: 'linear-gradient(0deg, #090, #FFF, #FFF, #FFF)'
+    // background: 'linear-gradient(180deg, #090, #FFF, #FFF, #FFF)',
+    // background: 'linear-gradient(225deg, #090, #FFF)',
+    border: "2px solid green"
   },
   rootNW: {
     maxWidth: "350px",
-    background: 'linear-gradient(0deg, #F11, #FFF, #FFF, #FFF)'
+    // background: 'linear-gradient(0deg, #F11, #FFF, #FFF, #FFF)',
+    border: "2px solid red"
   },
   primaryLight: {
         backgroundColor: theme.palette.primary.dark, 
@@ -85,10 +88,7 @@ const UpgradeCarButton = styled(Button)({
 const CarShowCard = ({loadCarToState, selectedCarId, data, updateCarMutation}) => {
     const classes = useStyles()
     
-    // console.log("NEW", data)
-     // This is on main below
-  // const [selectedCarId, setSelectedCarId] = useState(null);
-  console.log("CSHOW", selectedCarId)
+  // console.log("CSHOW", selectedCarId)
 
    const REQUEST_CAR = gql`
     query RequestCar($id: ID) {
@@ -122,7 +122,7 @@ const CarShowCard = ({loadCarToState, selectedCarId, data, updateCarMutation}) =
           </Typography>)
 
   const subtitleNotWorking =  (
-          <Typography  variant="body1" color="primary" component="span">
+          <Typography  variant="body1" color="error" component="span">
             Parked
           </Typography>)
 
@@ -150,13 +150,13 @@ const CarShowCard = ({loadCarToState, selectedCarId, data, updateCarMutation}) =
     const car = data ? data : null 
     let nextIncome; 
     let nextAILevel;
-    if(car){
+
+    if (car){
       nextIncome = (car.incomePerHr + (car.aILevel * 25));
       nextAILevel = (car.aILevel + 1);
     }
-    // console.log("dataa", car.model, car.id)
-    
 
+    
     return(
       
        <div>
@@ -225,12 +225,26 @@ const CarShowCard = ({loadCarToState, selectedCarId, data, updateCarMutation}) =
               {/* Button to Send Query Hire/Cancel/Upgrade */}
             <CardActions>
               {car ? !car.isWorking ? 
-              <SendDriverButton>
+              <SendDriverButton
+                onClick={() => updateCarMutation({
+                  variables: {
+                              id: car.id,
+                              input: {isSummoned: false, isWorking: true}
+                            }
+                })}
+              >
                 Hyre Car
               </SendDriverButton>
 
               :
-              <CancelDriverButton>
+              <CancelDriverButton
+                onClick={() => updateCarMutation({
+                  variables: {
+                              id: car.id,
+                              input: {isSummoned: true, isWorking: false}
+                            }
+                })}
+              >
                 Cancel Hyre
               </CancelDriverButton>
               : null}
