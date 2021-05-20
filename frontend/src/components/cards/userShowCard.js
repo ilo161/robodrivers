@@ -160,7 +160,7 @@ const UserShowCard = ({ data , data: owner, updateCarMutation, UPDATE_CAR, oneUs
                             {owner.lastName}
                         </Typography>
                         <Typography align="center">
-                            {owner.money}
+                            {`$ ${owner.money}`}
                         </Typography>
                     </CardContent>
                 </CardActionArea>

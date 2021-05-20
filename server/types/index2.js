@@ -33,7 +33,6 @@ module.exports = gql`
         user(id: ID): User
         allCars(isWorking: Boolean, aILevel: Int): [Car]
         car(id: ID) : Car
-
     }
 
     input CreateUserInput {
