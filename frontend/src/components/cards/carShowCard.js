@@ -55,6 +55,7 @@ const SendDriverButton = styled(Button)({
   color: 'white',
   height: 28,
 });
+
 const CancelDriverButton = styled(Button)({
   background: 'red',
   marginLeft: "8px",

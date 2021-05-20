@@ -5,8 +5,10 @@ const {
 
 
 module.exports = async (_, {id, input}, {models}) => {
+// module.exports = async (_, args, {models}) => {
     try{
-        console.log("updating...")
+        // console.log("just solo ID", id)
+        console.log("just solo input", input)
         const newAndUpdated = await models.Car.findByIdAndUpdate(
             {_id: id},
             input,

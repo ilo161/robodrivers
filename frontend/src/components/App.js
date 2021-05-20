@@ -77,6 +77,7 @@ query getAllCarsWithUsers {
     aILevel
     incomePerHr
     isWorking
+    isSummoned
     VIN
     url
     owner {
@@ -89,13 +90,43 @@ query getAllCarsWithUsers {
     firstName
     lastName
     money
+    cars{
+      id
+      aILevel
+      incomePerHr
+      isSummoned
+      isWorking
+    }
   }
 }`
 
 // const ALL_USERS =
+// With Single UpdateCarInput Type (versus [UpdateCarInput])
 const UPDATE_CAR = gql`
     mutation UpdateCar($id: ID, $input: UpdateCarInput!) {
       updateCar(id: $id, input: $input) {
+        id
+        make
+        model
+        mileage
+        year
+        aILevel
+        incomePerHr
+        isWorking
+        isSummoned
+        VIN
+        url
+        owner{
+          id
+          firstName
+          lastName
+          money
+        }
+      }
+}`
+const UPDATE_CARS_MANY = gql`
+    mutation updateCarMany($id: [ID], $input: [UpdateCarInput]!) {
+      updateCarMany(id: $id, input: $input) {
         id
         make
         model
@@ -125,8 +156,6 @@ const App = () => {
 
   const { loading, error, data } = useQuery(ALL_CARS);
 
-  // const [ updateCarQuery, {loading: loadingU, called: calledU, 
-  //                   error: errorU, data: dataU}] = useLazyQuery(UPDATE_CAR)
   const [ updateCarMutation, {loading: loadingU, called: calledU, 
                     error: errorU, data: dataU}] = useMutation(UPDATE_CAR)
 
@@ -160,7 +189,19 @@ const App = () => {
     setSelectedCarId(id);
   }
 
-  
+   allUsersArr = data ? data.users.map(owner => {
+    console.log("OWNER?", owner)
+    // const {owner} = car;
+    return (<Grid item xs={6} sm={6} md={4} lg={3}>
+              <UserShowCard
+                key={owner.id} data={owner}
+                // UPDATE_CAR={UPDATE_CAR}
+                updateCarMutation={updateCarMutation}
+                // UPDATE_CARS_MANY={UPDATE_CARS_MANY}
+                />
+            </Grid>
+            )
+  }) : null
 
   allCarsArr = data ? data.allCars.map(car => {
     // setCurrentData(data)
@@ -173,14 +214,7 @@ const App = () => {
             )
   }) : null
 
-  allUsersArr = data ? data.users.map(owner => {
-    console.log("OWNER?", owner)
-    // const {owner} = car;
-    return (<Grid item xs={12} sm={6} md={4} lg={3}>
-              <UserShowCard key={owner.id} data={owner}/>
-            </Grid>
-            )
-  }) : null
+ 
 
 
 
@@ -191,18 +225,13 @@ const App = () => {
       <Container maxWidth="lg">
         <div className="master">
           <NavBar/>
-            {/* <CarsIndex/> */}
-            {/* <CarShow loadCarToState={loadCarToState} 
-                      selectedCarId={selectedCarId}/> */}
-            {/* <CardShowCard loadCarToState={loadCarToState} 
-                      selectedCarId={selectedCarId}/> */}
 
-          <Grid container spacing={2} justify="center">
-            {allUsersArr}
-          </Grid>
-          <Grid container spacing={2} justify="center">
-            {allCarsArr}
-          </Grid>
+            <Grid container spacing={2} justify="center">
+              {allUsersArr}
+            </Grid>
+            <Grid container spacing={2} justify="center">
+              {allCarsArr}
+            </Grid>
             
         </div>
       </Container>
