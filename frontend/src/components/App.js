@@ -124,7 +124,7 @@ const App = () => {
   }) : null
 
   //Insert ALL USERS CARD
-  console.log("len", allCarsArr.length)
+  // console.log("len", allCarsArr.length)
   
   // brute force insert of all users button/card
   if (allUsersArr.length === 2 && data){
@@ -136,7 +136,7 @@ const App = () => {
                         />
                       </Grid>
                     )
-    console.log(allUsersArr)
+    // console.log(allUsersArr)
   }
 
 /****************
@@ -157,13 +157,13 @@ END USER CARDS
             )
   }) : null
 
-console.log(dataUserCars)
+// console.log(dataUserCars)
 
 // Updated "FILTERED" array when user clicks on User Show Card
-if( dataUserCars || dataAllUserCars){
-  console.log( dataAllUserCars ? dataAllUserCars : "one user")
-  console.log( dataUserCars ? dataUserCars : "")
-}
+// if( dataUserCars || dataAllUserCars){
+//   console.log( dataAllUserCars ? dataAllUserCars : "one user")
+//   console.log( dataUserCars ? dataUserCars : "")
+// }
 
 
 
