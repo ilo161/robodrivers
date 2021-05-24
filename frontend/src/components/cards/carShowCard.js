@@ -233,13 +233,20 @@ const CarShowCard = ({loadCarToState, selectedCarId, data, updateCarMutation}) =
                   <Typography  variant="h5" component="h2">
                     VIN: {car ? car.VIN : ""}
                   </Typography>
-                  <Typography  variant="h5" component="h2"
+                  {/* <Typography  variant="h5" component="h2"
                   onClick={() => 
                   setDisplayMainCard(displayMainCard ? false : true)
                   }
                   >
                     Click: -> {car ? "Info" : ""}
-                  </Typography>
+                  </Typography> */}
+                  
+                  <Button variant="contained" color="primary"
+                   onClick={() => 
+                  setDisplayMainCard(displayMainCard ? false : true)
+                  }>
+                      Info:
+                  </Button>
                 </Box>
           
 

@@ -72,7 +72,8 @@ const PORT = process.env.PORT || 5001;
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: {models}
+    context: {models},
+
 })
 
 server.listen({ port: PORT }).then(({ url }) => {

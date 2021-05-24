@@ -82,9 +82,36 @@ const HyreAllCarsButton = styled(Button)({
   height: 38,
 });
 
+const CreateVWBeetleButton = styled(Button)({
+  background: 'purple',
+  marginLeft: "8px",
+  padding: '4px 2px',
+  fontSize: "0.8125rem",
+  border: 0,
+  borderRadius: 3,
+  boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+  color: 'white',
+  height: 38,
+});
+
+const newBeetle = { mileage: 65,
+        make: "Beetle",
+        model: "VW",
+        color: "Rust",
+        year: "1960",
+        VIN: "vwbr1784",
+        isWorking: true,
+        isSummoned: false,
+        hadAccident: false,
+        maintenanceLog: [],
+        incomePerHr: 220,
+        aILevel: 2,
+        owner: "60a185529293eed030af2167",
+        url: "https://my-yelpy-seeds.s3-us-west-1.amazonaws.com/car_images/rust_vw.jpg"}
 
 
-const UserShowCard = ({ data , data: owner, updateCarMutation, UPDATE_CAR, oneUserCarsQuery }) => {
+
+const UserShowCard = ({ data , data: owner, updateCarMutation, createCarMutation, UPDATE_CAR, oneUserCarsQuery }) => {
 
     const classes = useStyles();
     // sending null here is very dangerous as it will crash the server... but
@@ -185,6 +212,17 @@ const UserShowCard = ({ data , data: owner, updateCarMutation, UPDATE_CAR, oneUs
                         >
                             Upgrade Cars
                         </UpgradeAllCarsButton>
+
+                        <CreateVWBeetleButton
+                            onClick={() => createCarMutation({
+                                             variables: {input: newBeetle}
+                                            }
+                        )}
+                        >
+                            Create VW Beetle
+                        </CreateVWBeetleButton>
+
+                        
                     </Box>
                 </Container>
                 </CardActions>
