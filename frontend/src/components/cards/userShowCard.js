@@ -177,40 +177,6 @@ const UserShowCard = ({ data , data: owner, updateCarMutation, createCarMutation
 
         }
 
-        // if(type == "summon"){
-        //     owner.cars.forEach(carObj => {
-
-        //         // grab current values and store in variable for fast mutation
-        //         id = carObj.id
-        //         input = {isSummoned: true, isWorking: false}
-
-        //         updateCarMutation({variables: { id, input }})
-        //     }) 
-        // } else if(type ==="hyre"){
-        //       owner.cars.forEach(carObj => {
-                
-        //         id = carObj.id
-        //         input = {isSummoned: false, isWorking: true}
-
-        //         updateCarMutation({variables: { id, input }})
-
-        //       })
-        // } else if(type ==="AI"){
-
-        //     owner.cars.forEach(carObj => {
-        //         // console.log("batch AI up", carObj)
-        //         id = carObj.id;
-        //         nextIncome = (carObj.incomePerHr + (carObj.aILevel * 25));
-        //         nextAILevel = (carObj.aILevel + 1);
-
-        //         updateCarMutation({
-        //                 variables: {id, 
-        //                             input: {aILevel: nextAILevel,
-        //                                     incomePerHr: nextIncome  
-        //                                     }
-        //                 }})
-        //     }) 
-        // }
           
     }
 
