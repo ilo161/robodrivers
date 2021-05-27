@@ -114,6 +114,45 @@ const newBeetle = { mileage: 65,
 const UserShowCard = ({ data , data: owner, updateCarMutation, createCarMutation, UPDATE_CAR, oneUserCarsQuery }) => {
 
     const classes = useStyles();
+
+    const [hours, setHours] = useState(0);
+    const [hrIncome, setHrIncome] = useState(owner.money);
+    
+    const generateUpdatedMonies = () => {
+        if(data){
+            
+            let moneyPerHr = 0;
+
+            owner.cars.forEach(car => {
+                if(car.isWorking) moneyPerHr += car.incomePerHr
+            })
+
+            return moneyPerHr;
+        }
+    }
+
+    useEffect(() => {
+        // Update the document title using the browser API
+        document.title = `${hours} hrs`;
+        if(data){
+            if(hours <= 23){
+                const timerId = setInterval(() => {
+                    setHours(hours + 1)
+                    setHrIncome(generateUpdatedMonies())
+                }, 2000);
+
+                console.log(timerId)
+
+                return () => clearInterval(timerId)
+            } else {
+                setHours(0)
+            }
+        }
+        
+
+    },[hours]);
+
+
     // sending null here is very dangerous as it will crash the server... but
     // won't fail because <Card> action will not render
     const id = owner ? owner.id : null
@@ -180,6 +219,8 @@ const UserShowCard = ({ data , data: owner, updateCarMutation, createCarMutation
           
     }
 
+    
+
 
     return (
         data ? 
@@ -197,7 +238,7 @@ const UserShowCard = ({ data , data: owner, updateCarMutation, createCarMutation
                             {owner.lastName}
                         </Typography>
                         <Typography align="center">
-                            {`$ ${owner.money}`}
+                            {`$ ${hrIncome}`}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
