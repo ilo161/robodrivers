@@ -16,6 +16,7 @@ query getAllCarsWithUsers {
     VIN
     url
     owner {
+      id
       firstName
       lastName
     }

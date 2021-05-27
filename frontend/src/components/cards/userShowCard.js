@@ -133,8 +133,9 @@ const UserShowCard = ({ data , data: owner, updateCarMutation, createCarMutation
         let nextIncome;
         let nextAILevel;
 
-        if(type == "summon"){
-            owner.cars.forEach(carObj => {
+        switch(type){
+            case "summon":
+                owner.cars.forEach(carObj => {
 
                 // grab current values and store in variable for fast mutation
                 id = carObj.id
@@ -142,31 +143,74 @@ const UserShowCard = ({ data , data: owner, updateCarMutation, createCarMutation
 
                 updateCarMutation({variables: { id, input }})
             }) 
-        } else if(type ==="hyre"){
-              owner.cars.forEach(carObj => {
+            break;
+
+            case "hyre":
+                 owner.cars.forEach(carObj => {
                 
-                id = carObj.id
-                input = {isSummoned: false, isWorking: true}
+                    id = carObj.id
+                    input = {isSummoned: false, isWorking: true}
 
-                updateCarMutation({variables: { id, input }})
+                    updateCarMutation({variables: { id, input }})
 
-              })
-        } else if(type ==="AI"){
+                })
+                break;
 
-            owner.cars.forEach(carObj => {
-                // console.log("batch AI up", carObj)
-                id = carObj.id;
-                nextIncome = (carObj.incomePerHr + (carObj.aILevel * 25));
-                nextAILevel = (carObj.aILevel + 1);
+            case "AI":
+                 owner.cars.forEach(carObj => {
+                    // console.log("batch AI up", carObj)
+                    id = carObj.id;
+                    nextIncome = (carObj.incomePerHr + (carObj.aILevel * 25));
+                    nextAILevel = (carObj.aILevel + 1);
 
-                updateCarMutation({
-                        variables: {id, 
-                                    input: {aILevel: nextAILevel,
-                                            incomePerHr: nextIncome  
-                                            }
-                        }})
-            }) 
+                    updateCarMutation({
+                            variables: {id, 
+                                        input: {aILevel: nextAILevel,
+                                                incomePerHr: nextIncome  
+                                                }
+                            }})
+                }) 
+
+            default:
+            console.log("all switch cases missed")
+            break;
+
         }
+
+        // if(type == "summon"){
+        //     owner.cars.forEach(carObj => {
+
+        //         // grab current values and store in variable for fast mutation
+        //         id = carObj.id
+        //         input = {isSummoned: true, isWorking: false}
+
+        //         updateCarMutation({variables: { id, input }})
+        //     }) 
+        // } else if(type ==="hyre"){
+        //       owner.cars.forEach(carObj => {
+                
+        //         id = carObj.id
+        //         input = {isSummoned: false, isWorking: true}
+
+        //         updateCarMutation({variables: { id, input }})
+
+        //       })
+        // } else if(type ==="AI"){
+
+        //     owner.cars.forEach(carObj => {
+        //         // console.log("batch AI up", carObj)
+        //         id = carObj.id;
+        //         nextIncome = (carObj.incomePerHr + (carObj.aILevel * 25));
+        //         nextAILevel = (carObj.aILevel + 1);
+
+        //         updateCarMutation({
+        //                 variables: {id, 
+        //                             input: {aILevel: nextAILevel,
+        //                                     incomePerHr: nextIncome  
+        //                                     }
+        //                 }})
+        //     }) 
+        // }
           
     }
 
@@ -213,14 +257,14 @@ const UserShowCard = ({ data , data: owner, updateCarMutation, createCarMutation
                             Upgrade Cars
                         </UpgradeAllCarsButton>
 
-                        <CreateVWBeetleButton
+                        {/* <CreateVWBeetleButton
                             onClick={() => createCarMutation({
                                              variables: {input: newBeetle}
                                             }
                         )}
                         >
                             Create VW Beetle
-                        </CreateVWBeetleButton>
+                        </CreateVWBeetleButton> */}
 
                         
                     </Box>

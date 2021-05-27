@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react"
-import {  gql, useQuery, useLazyQuery, useMutation } from '@apollo/client';
+import {  gql, useQuery, useLazyQuery, useMutation, useApolloClient } from '@apollo/client';
 import {Button,
         Container,
         CssBaseline,
@@ -23,6 +23,7 @@ import { CREATE_CAR } from "./util/mutations/CREATE_CAR"
 import { UPDATE_CAR } from "./util/mutations/UPDATE_CAR"
 import { ONE_USER_ALL_CARS } from "./util/queries/ONE_USER_ALL_CARS"
 
+// Visual Components
 import AllUsersCard from "./cards/allUsersCard"
 import UserShowCard from "./cards/userShowCard";
 import CarShowCard from "./cards/carShowCard";
@@ -47,6 +48,8 @@ const theme = createMuiTheme({
 
 
 const App = () => {
+  const client = useApolloClient();
+
   const [selectedCarId, setSelectedCarId] = useState("");
   const [currentData, setCurrentData] = useState({});
 
@@ -105,7 +108,7 @@ const App = () => {
   //                variables: { id: selectedCarId, input: true },
   //               notifyOnNetworkStatusChange: true
   //             });
-  
+  console.log("main data", data)
   
   //button callback from CarShow
   const loadCarToState = ( e, id ) => {
@@ -116,7 +119,7 @@ const App = () => {
 ***************/
 
    allUsersArr = data ? data.users.map(owner => {
-    // console.log("OWNER?", owner)
+    console.log("OWNER?", owner)
 
     return (<Grid item xs={5} sm={5} md={4} lg={4}>
               <UserShowCard
@@ -152,6 +155,19 @@ END USER CARDS
 
   // Car Cards Display FN's Below
   allCarsArr = data ? data.allCars.map(car => {
+    
+    // const { todo } = client.readQuery({
+    //   query: ALL_CARS,
+    //   variables: { // Provide any required variables here
+    //     id: 5,
+    //   },
+    // });
+
+    // console.log(all_cars_cache);
+
+    
+
+
 
     return (<Grid item xs={12} sm={6} md={4} lg={3}>
               <CarShowCard 
@@ -170,6 +186,11 @@ END USER CARDS
 //   console.log( dataAllUserCars ? dataAllUserCars : "one user")
 //   console.log( dataUserCars ? dataUserCars : "")
 // }
+
+
+
+
+
 
 
 
