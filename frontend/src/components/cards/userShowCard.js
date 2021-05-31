@@ -111,12 +111,13 @@ const newBeetle = { mileage: 65,
 
 
 
-const UserShowCard = ({ data , data: owner, updateCarMutation, createCarMutation, UPDATE_CAR, oneUserCarsQuery }) => {
+const UserShowCard = ({ data , data: owner, updateCarMutation, createCarMutation, UPDATE_CAR, oneUserCarsQuery,
+setFilterByUserBool,setFilterByUserId }) => {
 
     const classes = useStyles();
 
     const [hours, setHours] = useState(0);
-    const [hrIncome, setHrIncome] = useState(owner.money);
+    const [hrIncome, setHrIncome] = useState();
     
     const generateUpdatedMonies = () => {
         if(data){
@@ -228,7 +229,8 @@ const UserShowCard = ({ data , data: owner, updateCarMutation, createCarMutation
              justifyContent="center">
             <Card className={classes.rootCard} variant="outlined">
                 <CardActionArea 
-                    onClick={() => oneUserCarsQuery({ variables: { id } })}
+                    // onClick={() => oneUserCarsQuery({ variables: { id } })}
+                    onClick={() => {setFilterByUserId(id); setFilterByUserBool(true)}}
                 >
                     <CardContent>
                         <Typography align="center">
@@ -238,7 +240,7 @@ const UserShowCard = ({ data , data: owner, updateCarMutation, createCarMutation
                             {owner.lastName}
                         </Typography>
                         <Typography align="center">
-                            {`$ ${hrIncome}`}
+                            {`$ ${hrIncome === undefined ? "loading.." : hrIncome}`}
                         </Typography>
                     </CardContent>
                 </CardActionArea>

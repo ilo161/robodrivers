@@ -54,6 +54,10 @@ const App = () => {
   const [currentData, setCurrentData] = useState({});
 
   const [updateQueryBool, setUpdateQueryBool] = useState(false);
+  
+  // if Set to True, then access the cache to filter by user && then search by ID
+  const [filterByUserBool, setFilterByUserBool] = useState(false);
+  const [filterByUserId, setFilterByUserId] = useState("");
 
   const { loading, error, data } = useQuery(ALL_CARS);
   // const { loading, error, data } = useQuery(ALL_CARS);
@@ -127,6 +131,8 @@ const App = () => {
                 createCarMutation={createCarMutation}
                 updateCarMutation={updateCarMutation}
                 oneUserCarsQuery={oneUserCarsQuery}
+                setFilterByUserBool={setFilterByUserBool}
+                setFilterByUserId={setFilterByUserId}
                 />
             </Grid>
             )
@@ -165,11 +171,10 @@ END USER CARDS
 
     // console.log(all_cars_cache);
 
-    
-
-
-
-    return (<Grid item xs={12} sm={6} md={4} lg={3}>
+// Update the display filter to show only the users cars WITHOUT firing a query.
+    if(filterByUserBool){
+      if(car.owner.id === filterByUserId){
+          return (<Grid item xs={12} sm={6} md={4} lg={3}>
               <CarShowCard 
                 key={car.VIN} data={car}
                 updateCarMutation={updateCarMutation}
@@ -177,7 +182,24 @@ END USER CARDS
               />
             </Grid>
             )
-  }) : null
+      }
+    } else {
+      return (<Grid item xs={12} sm={6} md={4} lg={3}>
+              <CarShowCard 
+                key={car.VIN} data={car}
+                updateCarMutation={updateCarMutation}
+
+              />
+            </Grid>
+            )
+      } 
+    }) : null
+
+    
+
+
+
+     
 
 // console.log(dataUserCars)
 
@@ -194,20 +216,27 @@ END USER CARDS
 
 
 
-// Update only the cars the user owns
-  allCarsArr = dataUserCars ? dataUserCars.user.cars.map(car => {
+// Update only the cars the user owns via firing a query. However, lets try working
+// with the cache
+  // allCarsArr = dataUserCars ? dataUserCars.user.cars.map(car => {
 
-    return (<Grid item xs={12} sm={6} md={4} lg={3}>
-              <CarShowCard 
-                key={car.VIN} data={car}
-                updateCarMutation={updateCarMutation}
+  //   return (<Grid item xs={12} sm={6} md={4} lg={3}>
+  //             <CarShowCard 
+  //               key={car.VIN} data={car}
+  //               updateCarMutation={updateCarMutation}
 
-              />
-            </Grid>
-            )
-  }) : allCarsArr
+  //             />
+  //           </Grid>
+  //           )
+  // }) : allCarsArr
 
- 
+
+
+
+
+
+
+ if(filterByUserBool === true) console.log("deconstruction worked", filterByUserId)
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="lg">
