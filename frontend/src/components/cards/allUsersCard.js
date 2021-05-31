@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const AllUsersCard = ({ data , data: owner, allUsersCarsQuery }) => {
+const AllUsersCard = ({ data , data: owner, allUsersCarsQuery, setFilterByUserBool }) => {
 
     const classes = useStyles();
     // sending null here is very dangerous as it will crash the server... but
@@ -81,28 +81,35 @@ const AllUsersCard = ({ data , data: owner, allUsersCarsQuery }) => {
         data ? 
         <Box className={classes.root} display="flex" flexDirection="column" alignItems="center"
              justifyContent="center">
+             <Container maxWidth="sm">
             <Card className={classes.rootCard} variant="outlined">
                 <CardActionArea 
-                    onClick={() => allUsersCarsQuery()}
+                    // onClick={() => allUsersCarsQuery()}
+                    onClick={() => setFilterByUserBool(false)}
                 >
                     <CardContent>
-                        <Typography align="center">
+                        {/* <Typography align="center">
                             All User
                         </Typography>
                         <Typography align="center">
                              Cars Display
-                        </Typography>
+                        </Typography> */}
                         
+                    
+
+                    <Box display="flex" justifyContent="center" >
+                        <Typography align="center">
+                             Unfilter
+                        </Typography>
+                    </Box>
                     </CardContent>
                 </CardActionArea>
-                <CardActions>
-                <Container maxWidth="sm">
-                    <Box display="flex" justifyContent="center" >
-
-                    </Box>
-                </Container>
-                </CardActions>
+                {/* <CardActions> */}
+                
+                    
+                {/* </CardActions> */}
             </Card>
+                </Container>
         </Box>
         : <p> no button </p>
     )

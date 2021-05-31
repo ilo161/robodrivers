@@ -148,6 +148,7 @@ const App = () => {
     allUsersArr[1] = ( <Grid item xs={1} sm={2} md={2} lg={2}>
                         <AllUsersCard data={data}
                           allUsersCarsQuery={allUsersCarsQuery}
+                          setFilterByUserBool={setFilterByUserBool}
                         />
                       </Grid>
                     )
@@ -169,7 +170,7 @@ END USER CARDS
     //   },
     // });
 
-    // console.log(all_cars_cache);
+    
 
 // Update the display filter to show only the users cars WITHOUT firing a query.
     if(filterByUserBool){
