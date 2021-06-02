@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import NotifyDropdown from "./notifyDropdown";
 
 
 const useStyles = makeStyles(() => ({
@@ -29,6 +30,7 @@ const NavBar = () => {
     
 
     return(
+      <>
         <AppBar position="static" >
           <Toolbar style={{
             backgroundColor: '#1D3643'
@@ -40,10 +42,14 @@ const NavBar = () => {
               <Typography variant="h6">
                 RoboCars
               </Typography>
-              <Button color="inherit">Notifications</Button>
+              <Button className="parent-absolute" color="inherit">
+                Notifications
+                <NotifyDropdown/>
+              </Button>
             </Box>
           </Toolbar>
         </AppBar>
+        </>
     )
 }
 

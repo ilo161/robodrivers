@@ -237,7 +237,7 @@ END USER CARDS
 
 
 
- if(filterByUserBool === true) console.log("deconstruction worked", filterByUserId)
+//  if(filterByUserBool === true) console.log("deconstruction worked", filterByUserId)
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="lg">

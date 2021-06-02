@@ -246,7 +246,7 @@ setFilterByUserBool,setFilterByUserId }) => {
                 </CardActionArea>
                 <CardActions>
                 <Container maxWidth="sm">
-                    <Box display="flex" justifyContent="center" >
+                    <Box mb={1} display="flex" justifyContent="center" >
                         <HyreAllCarsButton
                             onClick={() => batchUpdateCars("hyre")}
                         >
@@ -261,8 +261,10 @@ setFilterByUserBool,setFilterByUserId }) => {
                     </Box>
                     <Box display="flex" justifyContent="center">
                         <UpgradeAllCarsButton
+                            fullWidth={true}
                             onClick={() => batchUpdateCars("AI")}
                         >
+                            {/* '${"Upgrade Cars".toUpperCase()}' */}
                             Upgrade Cars
                         </UpgradeAllCarsButton>
 
